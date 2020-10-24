@@ -1,7 +1,9 @@
 from flask import Flask, request
+from flask_cors import CORS, cross_origin
 import json
 
 app = Flask(__name__)
+CORS(app)
 
 with open('mock_data.json') as json_file:
     data = json.load(json_file)
