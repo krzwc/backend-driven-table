@@ -5,3 +5,12 @@ body {
   align-items: center;
   justify-content: center;
 }
+
+.table-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.ant-btn {
+  align-self: flex-end;
+}
