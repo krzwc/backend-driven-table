@@ -56,6 +56,7 @@ export const Table: FunctionComponent = () => {
     if (visibleColumnsFromSS) {
       setVisibleColumns(JSON.parse(visibleColumnsFromSS));
     } else {
+      // TODO: BE must save the data
       fetch(configEndpoint, {
         method: 'POST',
         headers: {
@@ -74,8 +75,16 @@ export const Table: FunctionComponent = () => {
 
   return data.length ? (
     <div className="table-container">
-      <ColumnsSelector visibleColumns={visibleColumns} columns={defaultColumnsNames} />
-      <AntdTable dataSource={data} columns={filterVisibleColumns(defaultColumns, visibleColumns)} />
+      <ColumnsSelector
+        visibleColumns={visibleColumns}
+        columns={defaultColumnsNames}
+        setVisibleColumns={setVisibleColumns}
+      />
+      <AntdTable
+        dataSource={data}
+        columns={filterVisibleColumns(defaultColumns, visibleColumns)}
+        pagination={{ showSizeChanger: false }}
+      />
     </div>
   ) : (
     <div />

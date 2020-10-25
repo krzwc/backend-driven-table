@@ -1,0 +1,36 @@
+export enum ENTITY_ACTION_TYPES {
+  CREATE = 'CREATE',
+  READ = 'READ',
+  UPDATE = 'UPDATE',
+  DELETE = 'DELETE',
+  LAZY_LOAD = 'LAZY_LOAD',
+}
+
+export enum ENTITY_ACTIONS {
+  CREATE_ENTITY_SUCCESS = 'CREATE_ENTITY_SUCCESS',
+  READ_ENTITY_SUCCESS = 'READ_ENTITY_SUCCESS',
+  UPDATE_ENTITY_SUCCESS = 'UPDATE_ENTITY_SUCCESS',
+  ENTITY_REQUEST_START = 'ENTITY_REQUEST_START',
+  ENTITY_REQUEST_FAILURE = 'ENTITY_REQUEST_FAILURE',
+}
+
+export enum ENTITY_TYPES {
+  DATA = 'data',
+  CONFIG = 'config',
+}
+
+export const URL_SEPARATOR = '/';
+
+export enum REQUEST_METHODS {
+  GET = 'GET',
+  POST = 'POST',
+  PUT = 'PUT',
+  DELETE = 'DELETE',
+}
+
+export const BASE_URL = 'http://0.0.0.0:5000/';
+
+export const URLS = {
+  DATA: 'data',
+  CONFIG: 'config',
+};
