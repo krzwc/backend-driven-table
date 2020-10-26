@@ -14,3 +14,20 @@ body {
 .ant-btn {
   align-self: flex-end;
 }
+
+.popover-content button {
+  float:right; 
+  clear:right;
+  overflow: auto;
+}
+
+.popover-content::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.popover-content .ant-checkbox-group-item {
+  display: block;
+  margin-right: 0;
+}
