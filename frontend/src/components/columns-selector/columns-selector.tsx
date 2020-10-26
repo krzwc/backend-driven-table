@@ -40,7 +40,7 @@ export const ColumnsSelector: FunctionComponent<ColumnsSelectorProps> = ({
       content={content({ visibleColumns, columns, setVisibleColumns })}
       title="Select visible columns"
       trigger="hover"
-      placement="left"
+      placement="rightBottom"
     >
       <Button type="ghost" icon={<SlidersOutlined />} />
     </AntdPopover>

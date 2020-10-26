@@ -1,5 +1,7 @@
 import React, { useEffect, useState, FunctionComponent } from 'react';
 import { Table as AntdTable } from 'antd';
+import { DataProvider } from '../../wrappers/data-provider/data-provider';
+import { ENTITY_TYPES, REQUEST_METHODS } from '../../common/consts';
 
 import { ColumnsSelector } from '../columns-selector/columns-selector';
 import { TableData } from './interfaces';
@@ -85,6 +87,20 @@ export const Table: FunctionComponent = () => {
         columns={filterVisibleColumns(defaultColumns, visibleColumns)}
         pagination={{ showSizeChanger: false }}
       />
+      <DataProvider entityType={ENTITY_TYPES.CONFIG} requestMethod={REQUEST_METHODS.POST} requestBody={defaultVisible}>
+        {({ childData }) => {
+          console.log('config', childData);
+
+          return <div />;
+        }}
+      </DataProvider>
+      <DataProvider entityType={ENTITY_TYPES.DATA} requestMethod={REQUEST_METHODS.GET}>
+        {({ childData }) => {
+          console.log('data', childData);
+
+          return <div />;
+        }}
+      </DataProvider>
     </div>
   ) : (
     <div />
