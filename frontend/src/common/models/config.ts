@@ -4,5 +4,5 @@ import { BASE_URL, URLS, REQUEST_METHODS } from '../consts';
 
 export const ConfigModel: Model = {
   url: HttpService.toURL([BASE_URL, URLS.CONFIG]),
-  requestMethod: REQUEST_METHODS.POST
+  requestMethod: REQUEST_METHODS.POST,
 };
