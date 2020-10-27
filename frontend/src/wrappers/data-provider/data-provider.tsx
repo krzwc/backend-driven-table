@@ -7,7 +7,6 @@ const http = HttpService.getInstance();
 
 interface DataProviderProps {
   entityType: ENTITY_TYPES;
-  requestMethod: REQUEST_METHODS;
   requestBody?: any;
   children(childData: any): ReactNode;
 }
@@ -24,9 +23,9 @@ export class DataProvider extends Component<DataProviderProps, DataProviderState
   }
 
   private fetchData = () => {
-    const { entityType, requestMethod, requestBody } = this.props;
+    const { entityType, requestBody } = this.props;
 
-    switch (requestMethod) {
+    switch (MODELS[entityType].requestMethod) {
       case REQUEST_METHODS.GET:
         http.get(MODELS[entityType].url).then(result => {
           this.setState({ childData: result });

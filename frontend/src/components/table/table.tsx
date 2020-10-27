@@ -87,14 +87,14 @@ export const Table: FunctionComponent = () => {
         columns={filterVisibleColumns(defaultColumns, visibleColumns)}
         pagination={{ showSizeChanger: false }}
       />
-      <DataProvider entityType={ENTITY_TYPES.CONFIG} requestMethod={REQUEST_METHODS.POST} requestBody={defaultVisible}>
+      <DataProvider entityType={ENTITY_TYPES.CONFIG} requestBody={defaultVisible}>
         {({ childData }) => {
           console.log('config', childData);
 
           return <div />;
         }}
       </DataProvider>
-      <DataProvider entityType={ENTITY_TYPES.DATA} requestMethod={REQUEST_METHODS.GET}>
+      <DataProvider entityType={ENTITY_TYPES.DATA}>
         {({ childData }) => {
           console.log('data', childData);
 

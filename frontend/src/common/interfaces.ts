@@ -1,4 +1,4 @@
-import { ENTITY_ACTION_TYPES, ENTITY_TYPES } from './consts';
+import { ENTITY_ACTION_TYPES, ENTITY_TYPES, REQUEST_METHODS } from './consts';
 import { Headers, CustomRequestMethod } from './http-service/interfaces';
 import { StoreState } from './store/interfaces';
 
@@ -16,6 +16,7 @@ interface EntityResponse {
 
 interface BaseModelProps {
   url: string | URL;
+  requestMethod?: REQUEST_METHODS;
   headers?: Headers;
   dependencies?: EntityDependency[];
   customRequestMethod?: CustomRequestMethod<EntityResponse>;
