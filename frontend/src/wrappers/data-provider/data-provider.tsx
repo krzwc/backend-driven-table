@@ -3,6 +3,7 @@ import { ENTITY_TYPES, REQUEST_METHODS } from '../../common/consts';
 import { HttpService } from '../../common/http-service/http-service';
 import { MODELS } from '../../common/models';
 import { isEmpty } from '../../common/helpers';
+import { isTransformResponseBodyInModel } from '../../common/interfaces';
 
 const http = HttpService.getInstance();
 
@@ -14,7 +15,7 @@ interface DataProviderProps {
 
 interface DataProviderState {
   entityData: any;
-  dependenciesData?: { entityType: ENTITY_TYPES; result: any }[];
+  dependenciesData?: { entityType: ENTITY_TYPES; entityData: any }[];
 }
 
 export class DataProvider extends Component<DataProviderProps, DataProviderState> {
@@ -31,12 +32,20 @@ export class DataProvider extends Component<DataProviderProps, DataProviderState
     switch (MODELS[entityType].requestMethod) {
       case REQUEST_METHODS.POST:
         http.post(MODELS[entityType].url, undefined, JSON.stringify(requestBody)).then(result => {
-          this.setState({ entityData: result });
+          if (isTransformResponseBodyInModel(MODELS[entityType])) {
+            this.setState({ entityData: MODELS[entityType].transformResponseBody!(result).data });
+          } else {
+            this.setState({ entityData: result.data });
+          }
         });
         break;
       default:
         http.get(MODELS[entityType].url).then(result => {
-          this.setState({ entityData: result });
+          if (isTransformResponseBodyInModel(MODELS[entityType])) {
+            this.setState({ entityData: MODELS[entityType].transformResponseBody!(result).data });
+          } else {
+            this.setState({ entityData: result.data });
+          }
         });
     }
   };
@@ -55,16 +64,49 @@ export class DataProvider extends Component<DataProviderProps, DataProviderState
         switch (MODELS[dependencyEntityType].requestMethod) {
           case REQUEST_METHODS.POST:
             http.post(MODELS[dependencyEntityType].url, undefined, JSON.stringify(requestBody)).then(result => {
-              this.setState({
-                dependenciesData: [...dependenciesData, { entityType: dependencyEntityType, result }],
-              });
+              if (isTransformResponseBodyInModel(MODELS[dependencyEntityType])) {
+                this.setState({
+                  dependenciesData: [
+                    ...dependenciesData,
+                    {
+                      entityType: dependencyEntityType,
+                      entityData: MODELS[dependencyEntityType].transformResponseBody!(result).data,
+                    },
+                  ],
+                });
+              } else {
+                this.setState({
+                  dependenciesData: [
+                    ...dependenciesData,
+                    {
+                      entityType: dependencyEntityType,
+                      entityData: result.data,
+                    },
+                  ],
+                });
+              }
             });
             break;
           default:
             http.get(MODELS[dependencyEntityType].url).then(result => {
-              this.setState({
-                dependenciesData: [...dependenciesData, { entityType: dependencyEntityType, result }],
-              });
+              if (isTransformResponseBodyInModel(MODELS[dependencyEntityType])) {
+                this.setState({
+                  dependenciesData: [
+                    ...dependenciesData,
+                    {
+                      entityType: dependencyEntityType,
+                      entityData: MODELS[dependencyEntityType].transformResponseBody!(result).data,
+                    },
+                  ],
+                });
+              } else {
+                this.setState({
+                  dependenciesData: [
+                    ...dependenciesData,
+                    { entityType: dependencyEntityType, entityData: result.data },
+                  ],
+                });
+              }
             });
         }
       });

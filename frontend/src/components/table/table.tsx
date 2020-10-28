@@ -5,7 +5,7 @@ import { ENTITY_TYPES, REQUEST_METHODS } from '../../common/consts';
 
 import { ColumnsSelector } from '../columns-selector/columns-selector';
 import { TableData } from './interfaces';
-import { filterVisibleColumns, transformResponseBody } from './helpers';
+import { filterVisibleColumns } from './helpers';
 import { isEmpty, noop } from '../../common/helpers';
 
 const defaultColumns = [
@@ -80,12 +80,12 @@ export const Table: FunctionComponent = () => {
     <DataProvider entityType={ENTITY_TYPES.DATA}>
       {({ entityData, dependenciesData }) => {
         if (!isEmpty(dependenciesData)) {
-          const { result: visibleColumns } = dependenciesData[0];
+          const { entityData: visibleColumns } = dependenciesData[0];
           return entityData && dependenciesData && entityData.length && dependenciesData.length ? (
             <div className="table-container">
               <ColumnsSelector visibleColumns={visibleColumns} columns={defaultColumnsNames} setVisibleColumns={noop} />
               <AntdTable
-                dataSource={transformResponseBody(entityData)}
+                dataSource={entityData}
                 columns={filterVisibleColumns(defaultColumns, visibleColumns)}
                 pagination={{ showSizeChanger: false }}
               />

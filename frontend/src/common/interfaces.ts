@@ -7,11 +7,11 @@ interface EntityDependency {
   entityIdParam?: string;
 }
 
-interface EntityResponse {
+export interface EntityResponse {
   data: object | object[];
-  filter_options?: any;
+  /* filter_options?: any;
   page?: any;
-  search?: any;
+  search?: any; */
 }
 
 interface BaseModelProps {
@@ -21,11 +21,21 @@ interface BaseModelProps {
   dependencies?: EntityDependency[];
   customRequestMethod?: CustomRequestMethod<EntityResponse>;
   transformRequestBody?(body: any, entityData: any, store: StoreState): object;
-  transformResponseBody?(body: any, entityData: any, store: StoreState): EntityResponse;
+  transformResponseBody?(response: any): EntityResponse;
+  /* transformResponseBody?(body: any, entityData: any, store: StoreState): EntityResponse; */
 }
 
 export interface Model extends BaseModelProps {
   actions?: {
     [actionType in keyof typeof ENTITY_ACTION_TYPES]?: BaseModelProps;
   };
+}
+
+type RequiredTransformResponseBody = Required<Pick<BaseModelProps, 'transformResponseBody'>>;
+type ModelWithoutTransformResponseBody = Omit<Model, 'transformResponseBody'>;
+type ModelWithRequiredTransformResponseBody = RequiredTransformResponseBody & ModelWithoutTransformResponseBody;
+
+// Type guard
+export function isTransformResponseBodyInModel(model: Model): model is ModelWithRequiredTransformResponseBody {
+  return model.transformResponseBody !== undefined;
 }
