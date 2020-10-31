@@ -1,12 +1,12 @@
 import React, { useEffect, useState, FunctionComponent } from 'react';
 import { Table as AntdTable } from 'antd';
-import { DataProvider } from '../../wrappers/data-provider/data-provider';
+import DataProvider from '../../wrappers/data-provider/data-provider';
 import { ENTITY_TYPES, REQUEST_METHODS } from '../../common/consts';
 
 import { ColumnsSelector } from '../columns-selector/columns-selector';
 import { TableData } from './interfaces';
 import { filterVisibleColumns } from './helpers';
-import { isEmpty, noop } from '../../common/helpers';
+import { isEmpty, noop, isNotEmpty } from '../../common/helpers';
 
 const defaultColumns = [
   {
@@ -45,8 +45,8 @@ const configEndpoint = 'http://0.0.0.0:5000/config';
 const VISIBLE_COLUMNS = 'VISIBLE_COLUMNS';
 
 export const Table: FunctionComponent = () => {
-  /* const [data, setData] = useState([] as TableData[]);
   const [visibleColumns, setVisibleColumns] = useState(defaultVisible);
+  /* const [data, setData] = useState([] as TableData[]);
 
   useEffect(() => {
     fetch(dataEndpoint)
@@ -77,24 +77,24 @@ export const Table: FunctionComponent = () => {
   }, []); */
 
   return (
-    <DataProvider entityType={ENTITY_TYPES.DATA}>
-      {({ entityData, dependenciesData }) => {
-        if (!isEmpty(dependenciesData)) {
-          const { entityData: visibleColumns } = dependenciesData[0];
-          return entityData && dependenciesData && entityData.length && dependenciesData.length ? (
-            <div className="table-container">
-              <ColumnsSelector visibleColumns={visibleColumns} columns={defaultColumnsNames} setVisibleColumns={noop} />
-              <AntdTable
-                dataSource={entityData}
-                columns={filterVisibleColumns(defaultColumns, visibleColumns)}
-                pagination={{ showSizeChanger: false }}
-              />
-            </div>
-          ) : (
-            <div />
-          );
-        }
-        return <div />;
+    <DataProvider entityType={ENTITY_TYPES.TABLE_DATA}>
+      {({ entityData: { data: tableData, status: tableStatus }, dependenciesData }) => {
+        const {
+          entityData: { data: configData, status: configStatus },
+        } = dependenciesData[0];
+
+        return isNotEmpty(tableData) && isNotEmpty(configData) ? (
+          <div className="table-container">
+            <ColumnsSelector visibleColumns={configData} columns={defaultColumnsNames} setVisibleColumns={noop} />
+            <AntdTable
+              dataSource={tableData}
+              columns={filterVisibleColumns(defaultColumns, configData)}
+              pagination={{ showSizeChanger: false }}
+            />
+          </div>
+        ) : (
+          <div />
+        );
       }}
     </DataProvider>
   );

@@ -15,8 +15,8 @@ export enum ENTITY_ACTIONS {
 }
 
 export enum ENTITY_TYPES {
-  DATA = 'data',
-  CONFIG = 'config',
+  TABLE_DATA = 'table-data',
+  TABLE_CONFIG = 'table-config',
 }
 
 export const URL_SEPARATOR = '/';
@@ -31,6 +31,12 @@ export enum REQUEST_METHODS {
 export const BASE_URL = 'http://0.0.0.0:5000';
 
 export const URLS = {
-  DATA: 'data',
-  CONFIG: 'config',
+  TABLE_DATA: 'table-data',
+  TABLE_CONFIG: 'table-config',
 };
+
+export enum REQUEST_STATUSES {
+  PENDING = 'PENDING',
+  SUCCESS = 'SUCCESS',
+  FAILURE = 'FAILURE',
+}

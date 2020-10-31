@@ -1,1 +1,33 @@
-export type StoreState = any;
+import { Action } from 'redux';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { ImmutableMap } from '../interfaces';
+import { ENTITY_TYPES, ENTITY_ACTIONS } from '../consts';
+
+export type StoreState = ImmutableMap<{
+  entities: {
+    [key: string]: any;
+  };
+}>;
+
+export interface EntitiesPayload {
+  entityType: ENTITY_TYPES;
+  data?: {
+    [key: string]: any;
+  };
+  /* filters?: any;
+    page?: any;
+    search?: any;
+    aditionalData?: any */
+}
+
+export interface EntitiesAction extends Action<ENTITY_ACTIONS> {
+  payload: EntitiesPayload;
+}
+
+export interface EntityData {
+  [key: string]: any;
+}
+
+export type CommonThunkAction<A> = ThunkAction<Promise<A>, StoreState, null, Action>;
+
+export type CommonThunkDispatch = ThunkDispatch<StoreState, null, Action>;

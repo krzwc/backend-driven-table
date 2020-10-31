@@ -13,3 +13,10 @@ export type CustomRequestMethod<ResponseInterface> = (
   data?: any,
   state?: StoreState,
 ) => Promise<ResponseInterface>;
+
+export interface ResponseError {
+  error_description?: string;
+  description?: string;
+  message?: string;
+  __status?: number;
+}

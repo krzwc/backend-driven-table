@@ -28,6 +28,13 @@ export class HttpService {
   public post = (url: string | URL, headers: Headers = {}, body: BodyInit) =>
     this.request({ url, headers, body, method: REQUEST_METHODS.POST });
 
+  public enhanceHeaders = (headers: Headers) => {
+    return {
+      'content-type': 'application/json',
+      ...headers,
+    };
+  };
+
   private request = ({ url, headers, method, body }: RequestParameters) => {
     let hasFailed = false;
     const urlString = url instanceof URL ? url.toString() : encodeURI(url);

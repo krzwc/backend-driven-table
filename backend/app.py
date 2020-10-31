@@ -9,11 +9,11 @@ with open('mock_data.json') as json_file:
     data = json.load(json_file)
 
 
-@app.route('/data')
+@app.route('/table-data')
 def get_data():
     return json.dumps({'data': data})
 
 
-@app.route('/config', methods=['POST'])
+@app.route('/table-config', methods=['POST'])
 def index():
     return json.dumps({'data': ["first_name", "last_name", "email", "gender", "ip_address"]})

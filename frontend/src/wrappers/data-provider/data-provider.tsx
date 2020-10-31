@@ -1,120 +1,89 @@
-import React, { Component, ReactNode } from 'react';
-import { ENTITY_TYPES, REQUEST_METHODS } from '../../common/consts';
-import { HttpService } from '../../common/http-service/http-service';
+import { Component, ReactNode } from 'react';
+import { connect, MapStateToPropsFactory } from 'react-redux';
+import { Selector } from 'reselect';
+import { ENTITY_TYPES } from '../../common/consts';
 import { MODELS } from '../../common/models';
-import { isEmpty } from '../../common/helpers';
-import { isTransformResponseBodyInModel } from '../../common/interfaces';
-
-const http = HttpService.getInstance();
+import { isNotEmpty } from '../../common/helpers';
+import { Entity } from '../../common/interfaces';
+import { entitiesSelector, entitiesStatusSelector } from '../../common/store/selectors/entites-selectors';
+import { StoreState, EntityData /* CommonThunkAction, EntitiesAction */ } from '../../common/store/interfaces';
+import { readEntity } from '../../common/store/actions/read-entity';
 
 interface DataProviderProps {
   entityType: ENTITY_TYPES;
-  requestBody?: any;
   children(childData: any): ReactNode;
 }
 
-interface DataProviderState {
-  entityData: any;
-  dependenciesData?: { entityType: ENTITY_TYPES; entityData: any }[];
+interface DependantEntitiesSelectors {
+  entityType: ENTITY_TYPES;
+  entitySelector: Selector<any, any>;
 }
 
-export class DataProvider extends Component<DataProviderProps, DataProviderState> {
-  public state = { entityData: null, dependenciesData: [] };
+const mapDispatchToProps: DispatchToProps = {
+  readEntityAction: readEntity,
+};
 
-  public componentDidMount() {
-    this.fetchData();
-    this.fetchDependencies();
+interface ReadEntityAction {
+  entityType: ENTITY_TYPES;
+  entityData: EntityData;
+}
+
+interface DispatchToProps {
+  readEntityAction({ entityType, entityData }: ReadEntityAction): void; // CommonThunkAction<EntitiesAction>?
+}
+
+interface StateToProps {
+  entityData: Entity | Entity[];
+  dependenciesData: {
+    entityType: ENTITY_TYPES;
+    entityData: Entity | Entity[];
+  }[];
+}
+
+const mapStateToPropsFactory: MapStateToPropsFactory<StateToProps, DataProviderProps, StoreState> = (
+  state,
+  { entityType },
+) => {
+  const statusSelector = entitiesStatusSelector(entityType);
+  const allEntitiesSelector = entitiesSelector(entityType);
+
+  const dependantEntities = MODELS[entityType].dependencies;
+  const areDependantEntities = isNotEmpty(dependantEntities);
+  let dependantEntitiesSelectors: DependantEntitiesSelectors[];
+  if (areDependantEntities) {
+    dependantEntitiesSelectors = dependantEntities!.map(dependantEntityType => ({
+      entityType: dependantEntityType.entityType,
+      entitySelector: entitiesSelector(dependantEntityType.entityType),
+    }));
   }
 
-  private fetchData = () => {
-    const { entityType, requestBody } = this.props;
+  return currentState => {
+    const baseProps = {
+      entityStatus: statusSelector(currentState),
+    };
 
-    switch (MODELS[entityType].requestMethod) {
-      case REQUEST_METHODS.POST:
-        http.post(MODELS[entityType].url, undefined, JSON.stringify(requestBody)).then(result => {
-          if (isTransformResponseBodyInModel(MODELS[entityType])) {
-            this.setState({ entityData: MODELS[entityType].transformResponseBody!(result).data });
-          } else {
-            this.setState({ entityData: result.data });
-          }
-        });
-        break;
-      default:
-        http.get(MODELS[entityType].url).then(result => {
-          if (isTransformResponseBodyInModel(MODELS[entityType])) {
-            this.setState({ entityData: MODELS[entityType].transformResponseBody!(result).data });
-          } else {
-            this.setState({ entityData: result.data });
-          }
-        });
-    }
+    return Object.assign(baseProps, {
+      entityData: allEntitiesSelector(currentState).toJS(),
+      dependenciesData: areDependantEntities
+        ? dependantEntitiesSelectors.map(selector => ({
+            entityType: selector.entityType,
+            entityData: selector.entitySelector(currentState).toJS(),
+          }))
+        : [],
+    });
   };
+};
 
-  private fetchDependencies = () => {
-    const { entityType } = this.props;
-    const { dependencies } = MODELS[entityType];
-
-    if (!isEmpty(dependencies)) {
-      /* eslint-disable */
-      dependencies?.forEach(dependency => {
-        const { entityType: dependencyEntityType } = dependency;
-        const { dependenciesData } = this.state;
-        const requestBody = null;
-
-        switch (MODELS[dependencyEntityType].requestMethod) {
-          case REQUEST_METHODS.POST:
-            http.post(MODELS[dependencyEntityType].url, undefined, JSON.stringify(requestBody)).then(result => {
-              if (isTransformResponseBodyInModel(MODELS[dependencyEntityType])) {
-                this.setState({
-                  dependenciesData: [
-                    ...dependenciesData,
-                    {
-                      entityType: dependencyEntityType,
-                      entityData: MODELS[dependencyEntityType].transformResponseBody!(result).data,
-                    },
-                  ],
-                });
-              } else {
-                this.setState({
-                  dependenciesData: [
-                    ...dependenciesData,
-                    {
-                      entityType: dependencyEntityType,
-                      entityData: result.data,
-                    },
-                  ],
-                });
-              }
-            });
-            break;
-          default:
-            http.get(MODELS[dependencyEntityType].url).then(result => {
-              if (isTransformResponseBodyInModel(MODELS[dependencyEntityType])) {
-                this.setState({
-                  dependenciesData: [
-                    ...dependenciesData,
-                    {
-                      entityType: dependencyEntityType,
-                      entityData: MODELS[dependencyEntityType].transformResponseBody!(result).data,
-                    },
-                  ],
-                });
-              } else {
-                this.setState({
-                  dependenciesData: [
-                    ...dependenciesData,
-                    { entityType: dependencyEntityType, entityData: result.data },
-                  ],
-                });
-              }
-            });
-        }
-      });
-    }
-  };
+export class DataProvider extends Component<StateToProps & DataProviderProps & DispatchToProps> {
+  public componentDidMount() {
+    const { readEntityAction, entityType } = this.props;
+    readEntityAction({ entityType, entityData: {} });
+  }
 
   public render = () => {
-    const { children } = this.props;
-    return children(this.state);
+    const { children, entityData, dependenciesData } = this.props;
+    return children({ entityData, dependenciesData });
   };
 }
+
+export default connect(mapStateToPropsFactory, mapDispatchToProps)(DataProvider);

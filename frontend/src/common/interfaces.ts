@@ -2,7 +2,11 @@ import { ENTITY_ACTION_TYPES, ENTITY_TYPES, REQUEST_METHODS } from './consts';
 import { Headers, CustomRequestMethod } from './http-service/interfaces';
 import { StoreState } from './store/interfaces';
 
-interface EntityDependency {
+export interface Entity {
+  [key: string]: any;
+}
+
+export interface EntityDependency {
   entityType: ENTITY_TYPES;
   entityIdParam?: string;
 }
@@ -15,7 +19,7 @@ export interface EntityResponse {
 }
 
 interface BaseModelProps {
-  url: string | URL;
+  url?: string | URL;
   requestMethod?: REQUEST_METHODS;
   headers?: Headers;
   dependencies?: EntityDependency[];
@@ -31,11 +35,7 @@ export interface Model extends BaseModelProps {
   };
 }
 
-type RequiredTransformResponseBody = Required<Pick<BaseModelProps, 'transformResponseBody'>>;
-type ModelWithoutTransformResponseBody = Omit<Model, 'transformResponseBody'>;
-type ModelWithRequiredTransformResponseBody = RequiredTransformResponseBody & ModelWithoutTransformResponseBody;
-
-// Type guard
-export function isTransformResponseBodyInModel(model: Model): model is ModelWithRequiredTransformResponseBody {
-  return model.transformResponseBody !== undefined;
+export interface ImmutableMap<T> extends Omit<Map<string, any>, 'get' | 'set'> {
+  get<K extends keyof T>(name: K, notSetValue?: T[K]): T[K];
+  set<K extends keyof T>(Key: K, value: T[K]): ImmutableMap<T>;
 }
