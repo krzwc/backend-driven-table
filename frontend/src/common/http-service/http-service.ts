@@ -46,7 +46,7 @@ export class HttpService {
       credentials: 'same-origin',
     })
       .then(response => {
-        const { status, ok } = response;
+        const { /* status, */ ok } = response;
         if (!ok) {
           hasFailed = true;
         }
