@@ -1,12 +1,13 @@
 import React, { useEffect, useState, FunctionComponent } from 'react';
 import { Table as AntdTable } from 'antd';
 import DataProvider from '../../wrappers/data-provider/data-provider';
-import { ENTITY_TYPES, REQUEST_METHODS } from '../../common/consts';
+import { ENTITY_TYPES, REQUEST_METHODS, REQUEST_STATUSES } from '../../common/consts';
 
 import { ColumnsSelector } from '../columns-selector/columns-selector';
 import { TableData } from './interfaces';
 import { filterVisibleColumns } from './helpers';
 import { isEmpty, noop, isNotEmpty } from '../../common/helpers';
+import { Loader } from '../loader/loader';
 
 const defaultColumns = [
   {
@@ -82,6 +83,9 @@ export const Table: FunctionComponent = () => {
         const {
           entityData: { data: configData, status: configStatus },
         } = dependenciesData[0];
+        if (tableStatus === REQUEST_STATUSES.PENDING) {
+          return <Loader />;
+        }
 
         return isNotEmpty(tableData) && isNotEmpty(configData) ? (
           <div className="table-container">

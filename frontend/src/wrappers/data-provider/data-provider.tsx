@@ -6,7 +6,7 @@ import { MODELS } from '../../common/models';
 import { isNotEmpty } from '../../common/helpers';
 import { Entity } from '../../common/interfaces';
 import { entitiesSelector, entitiesStatusSelector } from '../../common/store/selectors/entites-selectors';
-import { StoreState, EntityData /* CommonThunkAction, EntitiesAction */ } from '../../common/store/interfaces';
+import { StoreState, EntityData } from '../../common/store/interfaces';
 import { readEntity } from '../../common/store/actions/read-entity';
 
 interface DataProviderProps {
@@ -29,7 +29,7 @@ interface ReadEntityAction {
 }
 
 interface DispatchToProps {
-  readEntityAction({ entityType, entityData }: ReadEntityAction): void; // CommonThunkAction<EntitiesAction>?
+  readEntityAction({ entityType, entityData }: ReadEntityAction): void;
 }
 
 interface StateToProps {
