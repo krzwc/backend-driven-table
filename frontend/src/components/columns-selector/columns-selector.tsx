@@ -1,15 +1,20 @@
-import React, { FunctionComponent, Dispatch, SetStateAction, useState } from 'react';
+import React, { FunctionComponent, Dispatch, SetStateAction, useState, useEffect } from 'react';
 import { Popover as AntdPopover, Button, Checkbox } from 'antd';
 import { SlidersOutlined } from '@ant-design/icons';
 
 interface ColumnsSelectorProps {
   visibleColumns: string[];
+  configData: string[];
   columns: string[];
   setVisibleColumns: Dispatch<SetStateAction<string[]>>;
 }
 
-const content = ({ visibleColumns, columns, setVisibleColumns }: ColumnsSelectorProps) => {
+const content = ({ visibleColumns, configData, columns, setVisibleColumns }: ColumnsSelectorProps) => {
   const [checkboxGroupState, setCheckboxGroupState] = useState(visibleColumns);
+
+  useEffect(() => {
+    setVisibleColumns(configData);
+  }, [configData]);
 
   const handleClick = () => {
     setVisibleColumns(checkboxGroupState);
@@ -32,12 +37,13 @@ const content = ({ visibleColumns, columns, setVisibleColumns }: ColumnsSelector
 
 export const ColumnsSelector: FunctionComponent<ColumnsSelectorProps> = ({
   visibleColumns,
+  configData,
   columns,
   setVisibleColumns,
 }) => {
   return (
     <AntdPopover
-      content={content({ visibleColumns, columns, setVisibleColumns })}
+      content={content({ visibleColumns, configData, columns, setVisibleColumns })}
       title="Select visible columns"
       trigger="hover"
       placement="rightBottom"
