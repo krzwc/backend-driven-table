@@ -1,22 +1,22 @@
 import { StoreState } from '../store/interfaces';
 
 export interface Headers {
-  [key: string]: string;
+    [key: string]: string;
 }
 
 export interface RequestParameters extends RequestInit {
-  url: string | URL;
+    url: string | URL;
 }
 
 export type CustomRequestMethod<ResponseInterface> = (
-  requestSettings: any,
-  data?: any,
-  state?: StoreState,
+    requestSettings: any,
+    data?: any,
+    state?: StoreState,
 ) => Promise<ResponseInterface>;
 
 export interface ResponseError {
-  error_description?: string;
-  description?: string;
-  message?: string;
-  __status?: number;
+    error_description?: string;
+    description?: string;
+    message?: string;
+    __status?: number;
 }

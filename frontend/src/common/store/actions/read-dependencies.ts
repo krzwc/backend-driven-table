@@ -8,40 +8,42 @@ import { showErrorNotification } from './helpers/failure-handler';
 const http = HttpService.getInstance();
 
 export const readDependencies = (
-  dependencies: EntityDependency[],
-  state: StoreState,
-  dispatch: CommonThunkDispatch,
+    dependencies: EntityDependency[],
+    state: StoreState,
+    dispatch: CommonThunkDispatch,
 ) => {
-  const dependenciesSettings = dependencies.map(({ entityType }) => {
-    const actionSettings = getActionSettings({ entityType, actionType: ENTITY_ACTION_TYPES.READ }, state);
+    const dependenciesSettings = dependencies.map(({ entityType }) => {
+        const actionSettings = getActionSettings({ entityType, actionType: ENTITY_ACTION_TYPES.READ }, state);
 
-    const { url, customRequestMethod, headers } = actionSettings;
+        const { url, customRequestMethod, headers } = actionSettings;
 
-    return {
-      entityType,
-      actionSettings,
-      requestPromise: customRequestMethod
-        ? customRequestMethod({ ...actionSettings, initiateByDependency: true }, state)
-        : http.get(url!, headers),
-    };
-  });
-
-  Promise.all(dependenciesSettings.map(dependencySetting => dependencySetting.requestPromise))
-    .then(responses => {
-      dependenciesSettings.forEach(({ actionSettings, entityType }, index) => {
-        const { transformResponseBody } = actionSettings;
-        const singleResponse = transformResponseBody ? transformResponseBody(responses[index]) : responses[index];
-        const { data, ...rest } = singleResponse;
-        const payload = data ? { data } : { data: singleResponse };
-
-        dispatch({
-          type: ENTITY_ACTIONS.READ_ENTITY_SUCCESS,
-          payload: {
+        return {
             entityType,
-            ...payload,
-          },
-        });
-      });
-    })
-    .catch(showErrorNotification);
+            actionSettings,
+            requestPromise: customRequestMethod
+                ? customRequestMethod({ ...actionSettings, initiateByDependency: true }, state)
+                : http.get(url!, headers),
+        };
+    });
+
+    Promise.all(dependenciesSettings.map((dependencySetting) => dependencySetting.requestPromise))
+        .then((responses) => {
+            dependenciesSettings.forEach(({ actionSettings, entityType }, index) => {
+                const { transformResponseBody } = actionSettings;
+                const singleResponse = transformResponseBody
+                    ? transformResponseBody(responses[index])
+                    : responses[index];
+                const { data, ...rest } = singleResponse;
+                const payload = data ? { data } : { data: singleResponse };
+
+                dispatch({
+                    type: ENTITY_ACTIONS.READ_ENTITY_SUCCESS,
+                    payload: {
+                        entityType,
+                        ...payload,
+                    },
+                });
+            });
+        })
+        .catch(showErrorNotification);
 };

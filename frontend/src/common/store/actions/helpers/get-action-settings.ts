@@ -8,9 +8,9 @@ import { get } from '../../../helpers';
 const http = HttpService.getInstance();
 
 interface RequestData {
-  entityType: ENTITY_TYPES;
-  entityData?: EntityData;
-  actionType?: keyof typeof ENTITY_ACTION_TYPES;
+    entityType: ENTITY_TYPES;
+    entityData?: EntityData;
+    actionType?: keyof typeof ENTITY_ACTION_TYPES;
 }
 
 type EntityActionRequestSettings = Model;
@@ -18,27 +18,29 @@ type EntityActionRequestSettings = Model;
 export type GetRequestSettings = (data: RequestData, state: StoreState) => EntityActionRequestSettings;
 
 export const getActionSettings: GetRequestSettings = ({ entityType, actionType }, state: StoreState) => {
-  const model = MODELS[entityType];
-  const modelActions = get(model, ['actions', actionType!], {}) || {};
-  const actionSettings = { ...model, ...modelActions };
+    const model = MODELS[entityType];
+    const modelActions = get(model, ['actions', actionType!], {}) || {};
+    const actionSettings = { ...model, ...modelActions };
 
-  const {
-    headers,
-    url,
-    dependencies = [],
-    /* notifications = {}, */
-    customRequestMethod,
-    transformRequestBody,
-    transformResponseBody,
-  } = actionSettings;
+    const {
+        headers,
+        url,
+        replaceMode,
+        dependencies = [],
+        /* notifications = {}, */
+        customRequestMethod,
+        transformRequestBody,
+        transformResponseBody,
+    } = actionSettings;
 
-  return {
-    dependencies,
-    /* notifications, */
-    customRequestMethod,
-    transformRequestBody,
-    transformResponseBody,
-    url,
-    headers: http.enhanceHeaders(headers!),
-  };
+    return {
+        dependencies,
+        /* notifications, */
+        customRequestMethod,
+        transformRequestBody,
+        transformResponseBody,
+        url,
+        headers: http.enhanceHeaders(headers!),
+        replaceMode,
+    };
 };

@@ -6,8 +6,8 @@ import { rootReducer } from './reducers';
 const INITIAL_STATE = Map();
 
 declare global {
-  interface Window {
-    /* eslint-disable */
+    interface Window {
+        /* eslint-disable */
     __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
   }
 }

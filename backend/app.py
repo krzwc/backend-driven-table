@@ -14,6 +14,10 @@ def get_data():
     return json.dumps({'data': data})
 
 
-@app.route('/table-config', methods=['POST'])
+@app.route('/table-config', methods=['POST', 'PUT'])
 def index():
-    return json.dumps({'data': ["first_name", "last_name", "email", "gender", "ip_address"]})
+    if request.method == 'PUT':
+        print(request.data)
+        return request.data
+    else:
+        return json.dumps({'data': ["first_name", "last_name", "email", "gender", "ip_address"]})

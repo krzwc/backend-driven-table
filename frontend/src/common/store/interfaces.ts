@@ -4,28 +4,29 @@ import { ImmutableMap } from '../interfaces';
 import { ENTITY_TYPES, ENTITY_ACTIONS } from '../consts';
 
 export type StoreState = ImmutableMap<{
-  entities: {
-    [key: string]: any;
-  };
+    entities: {
+        [key: string]: any;
+    };
 }>;
 
 export interface EntitiesPayload {
-  entityType: ENTITY_TYPES;
-  data?: {
-    [key: string]: any;
-  };
-  /* filters?: any;
+    entityType: ENTITY_TYPES;
+    data?: {
+        [key: string]: any;
+    };
+    replaceMode?: boolean;
+    /* filters?: any;
     page?: any;
     search?: any;
     aditionalData?: any */
 }
 
 export interface EntitiesAction extends Action<ENTITY_ACTIONS> {
-  payload: EntitiesPayload;
+    payload: EntitiesPayload;
 }
 
 export interface EntityData {
-  [key: string]: any;
+    [key: string]: any;
 }
 
 export type CommonThunkAction<A> = ThunkAction<Promise<A>, StoreState, null, Action>;

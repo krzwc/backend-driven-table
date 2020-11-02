@@ -5,9 +5,9 @@ import 'antd/dist/antd.css';
 import { Table } from '../components/table/table';
 
 export const Main = () => {
-  return (
-    <div className="container">
-      <Table />
-    </div>
-  );
+    return (
+      <div className="container">
+          <Table />
+        </div>
+    );
 };

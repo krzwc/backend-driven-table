@@ -7,7 +7,7 @@ import { Main } from './pages/main';
 
 render(
   <Provider store={store}>
-    <Main />
-  </Provider>,
-  document.getElementById('root'),
+      <Main />
+    </Provider>,
+    document.getElementById('root'),
 );

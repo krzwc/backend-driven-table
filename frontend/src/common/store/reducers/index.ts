@@ -5,7 +5,7 @@ import { StoreState, EntitiesAction } from '../interfaces';
 import { entitiesReducer } from './entities-reducer';
 
 const reducers: ReducersMapObject<any, EntitiesAction> = {
-  entities: entitiesReducer,
+    entities: entitiesReducer,
 };
 
 export const rootReducer = combineReducers<StoreState>(reducers);
