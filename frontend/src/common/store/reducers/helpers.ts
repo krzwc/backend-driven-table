@@ -1,7 +1,7 @@
 import { fromJS, List, Map } from 'immutable';
-import { Entity } from '../../interfaces';
-import { EntitiesPayload } from '../interfaces';
-import { isNotEmpty } from '../../helpers';
+import { Entity } from 'common/interfaces';
+import { EntitiesPayload } from 'common/store/interfaces';
+import { isNotEmpty } from 'common/helpers';
 
 export const basicStoreKeys = [
     'data',

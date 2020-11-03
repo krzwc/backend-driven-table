@@ -1,10 +1,10 @@
-import { MODELS } from '../../../models/index';
-import { BaseModelProps } from '../../../interfaces';
-import { StoreState, EntityData } from '../../interfaces';
-import { HttpService } from '../../../http-service/http-service';
-import { ENTITY_ACTION_TYPES, ENTITY_TYPES } from '../../../consts';
-import { get } from '../../../helpers';
-import { ObjectType } from '../../../interfaces';
+import { MODELS } from 'common/models/index';
+import { BaseModelProps } from 'common/interfaces';
+import { StoreState, EntityData } from 'common/store/interfaces';
+import { HttpService } from 'common/http-service/http-service';
+import { ENTITY_ACTION_TYPES, ENTITY_TYPES } from 'common/consts';
+import { get } from 'common/helpers';
+import { ObjectType } from 'common/interfaces';
 
 const http = HttpService.getInstance();
 

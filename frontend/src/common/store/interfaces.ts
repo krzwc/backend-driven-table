@@ -1,7 +1,7 @@
 import { Action } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import { ImmutableMap } from '../interfaces';
-import { ENTITY_TYPES, ENTITY_ACTIONS } from '../consts';
+import { ImmutableMap } from 'common/interfaces';
+import { ENTITY_TYPES, ENTITY_ACTIONS } from 'common/consts';
 
 export type StoreState = ImmutableMap<{
     entities: {

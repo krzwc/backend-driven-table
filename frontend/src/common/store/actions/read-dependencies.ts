@@ -1,7 +1,7 @@
-import { ENTITY_ACTIONS, ENTITY_ACTION_TYPES } from '../../consts';
-import { HttpService } from '../../http-service/http-service';
-import { EntityDependency } from '../../interfaces';
-import { CommonThunkDispatch, StoreState } from '../interfaces';
+import { ENTITY_ACTIONS, ENTITY_ACTION_TYPES } from 'common/consts';
+import { HttpService } from 'common/http-service/http-service';
+import { EntityDependency } from 'common/interfaces';
+import { CommonThunkDispatch, StoreState } from 'common/store/interfaces';
 import { getActionSettings } from './helpers/get-action-settings';
 import { showErrorNotification } from './helpers/failure-handler';
 

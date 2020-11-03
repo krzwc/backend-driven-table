@@ -1,5 +1,4 @@
-import { ENTITY_TYPES } from '../consts';
-
+import { ENTITY_TYPES } from 'common/consts';
 import { TableDataModel } from './table-data';
 import { TableConfigModel } from './table-config';
 

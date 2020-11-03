@@ -1,13 +1,13 @@
 import { Component, ReactNode } from 'react';
 import { connect, MapStateToPropsFactory } from 'react-redux';
 import { Selector } from 'reselect';
-import { ENTITY_TYPES } from '../../common/consts';
-import { MODELS } from '../../common/models';
-import { isNotEmpty } from '../../common/helpers';
-import { Entity } from '../../common/interfaces';
-import { entitiesSelector, entitiesStatusSelector } from '../../common/store/selectors/entites-selectors';
-import { StoreState, EntityData } from '../../common/store/interfaces';
-import { readEntity } from '../../common/store/actions/read-entity';
+import { ENTITY_TYPES } from 'common/consts';
+import { MODELS } from 'common/models';
+import { isNotEmpty } from 'common/helpers';
+import { Entity } from 'common/interfaces';
+import { entitiesSelector, entitiesStatusSelector } from 'common/store/selectors/entites-selectors';
+import { StoreState, EntityData } from 'common/store/interfaces';
+import { readEntity } from 'common/store/actions/read-entity';
 
 interface DataProviderProps {
     entityType: ENTITY_TYPES;

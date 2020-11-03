@@ -10,7 +10,22 @@
     "jsx": "react",
     "strict": true,
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "common/*": [
+        "src/common/*"
+      ],
+      "components/*": [
+        "src/components/*"
+      ],
+      "pages/*": [
+        "src/pages/*"
+      ],
+      "wrappers/*": [
+        "src/wrappers/*"
+      ],
+    }
   },
   "include": ["src", "custom.d.ts"]
 }

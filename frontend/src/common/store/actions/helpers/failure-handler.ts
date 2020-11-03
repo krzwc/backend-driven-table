@@ -1,5 +1,5 @@
-import { ENTITY_TYPES } from '../../../consts';
-import { ResponseError } from '../../../http-service/interfaces';
+import { ENTITY_TYPES } from 'common/consts';
+import { ResponseError } from 'common/http-service/interfaces';
 /* import { CommonThunkDispatch, StoreState } from '../../interfaces'; */
 
 export const showErrorNotification = (errorMsg: string): void => {

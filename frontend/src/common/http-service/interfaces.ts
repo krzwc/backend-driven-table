@@ -1,4 +1,4 @@
-import { StoreState } from '../store/interfaces';
+import { StoreState } from 'common/store/interfaces';
 
 export interface Headers {
     [key: string]: string;

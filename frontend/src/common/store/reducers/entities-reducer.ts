@@ -1,6 +1,6 @@
 import { fromJS, List, Map } from 'immutable';
-import { EntitiesAction, EntitiesPayload } from '../interfaces';
-import { ENTITY_ACTIONS, REQUEST_STATUSES } from '../../consts';
+import { EntitiesAction, EntitiesPayload } from 'common/store/interfaces';
+import { ENTITY_ACTIONS, REQUEST_STATUSES } from 'common/consts';
 import { basicStoreKeys, updateSingleEntity, mutateState } from './helpers';
 
 const initialState = Map();

@@ -4,6 +4,12 @@ const ESLintPlugin = require('eslint-webpack-plugin');
 module.exports = {
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
+        alias: {
+            common: path.resolve(__dirname, 'src/common/'),
+            components: path.resolve(__dirname, 'src/components/'),
+            pages: path.resolve(__dirname, 'src/pages/'),
+            wrappers: path.resolve(__dirname, 'src/wrappers/'),
+        }
     },
     devServer: {
         contentBase: path.join(__dirname, 'public'),

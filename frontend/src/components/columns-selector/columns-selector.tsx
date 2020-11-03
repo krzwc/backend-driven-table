@@ -2,9 +2,9 @@ import React, { FunctionComponent, Dispatch, SetStateAction, useState, useEffect
 import { Popover as AntdPopover, Button, Checkbox } from 'antd';
 import { SlidersOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
-import { updateEntity } from '../../common/store/actions/update-entity';
-import { ENTITY_TYPES } from '../../common/consts';
-import { EntityData } from '../../common/store/interfaces';
+import { updateEntity } from 'common/store/actions/update-entity';
+import { ENTITY_TYPES } from 'common/consts';
+import { EntityData } from 'common/store/interfaces';
 
 interface ColumnsSelectorProps {
     visibleColumns: string[];
@@ -47,16 +47,16 @@ const content = ({
 
     return (
         <div className="popover-content">
-        <Checkbox.Group
+            <Checkbox.Group
                 options={columns}
                 defaultValue={visibleColumns}
                 onChange={(checkedValues) => setCheckboxGroupState(checkedValues as string[])}
-          />
-        <br />
-        <Button type="primary" onClick={handleClick}>
-              Apply
+            />
+            <br />
+            <Button type="primary" onClick={handleClick}>
+                Apply
             </Button>
-      </div>
+        </div>
     );
 };
 
@@ -70,12 +70,12 @@ export const ColumnsSelector: FunctionComponent<ColumnsSelectorProps> = ({
     return (
         <AntdPopover
             content={content({ visibleColumns, configData, columns, setVisibleColumns, updateEntityAction })}
-        title="Select visible columns"
+            title="Select visible columns"
             trigger="hover"
             placement="rightBottom"
-      >
+        >
             <Button type="ghost" icon={<SlidersOutlined />} />
-      </AntdPopover>
+        </AntdPopover>
     );
 };
 

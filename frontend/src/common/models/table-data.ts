@@ -1,7 +1,7 @@
-import { Model, EntityResponse } from '../interfaces';
-import { HttpService } from '../http-service/http-service';
-import { BASE_URL, URLS, ENTITY_TYPES } from '../consts';
-import { Data } from '../../components/table/interfaces';
+import { Model, EntityResponse } from 'common/interfaces';
+import { HttpService } from 'common/http-service/http-service';
+import { BASE_URL, URLS, ENTITY_TYPES } from 'common/consts';
+import { Data } from 'components/table/interfaces';
 
 interface TableDataResponse {
     data: Data[];

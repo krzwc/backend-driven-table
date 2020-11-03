@@ -1,12 +1,12 @@
 import React, { useState, FunctionComponent } from 'react';
 import { Table as AntdTable } from 'antd';
-import DataProvider from '../../wrappers/data-provider/data-provider';
-import { ENTITY_TYPES, REQUEST_STATUSES } from '../../common/consts';
+import DataProvider from 'wrappers/data-provider/data-provider';
+import { ENTITY_TYPES, REQUEST_STATUSES } from 'common/consts';
 
-import ColumnsSelector from '../columns-selector/columns-selector';
+import ColumnsSelector from 'components/columns-selector/columns-selector';
 import { filterVisibleColumns } from './helpers';
-import { isNotEmpty } from '../../common/helpers';
-import { Loader } from '../loader/loader';
+import { isNotEmpty } from 'common/helpers';
+import { Loader } from 'components/loader/loader';
 
 const defaultColumns = [
     {

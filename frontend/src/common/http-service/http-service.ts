@@ -1,6 +1,6 @@
-import { URL_SEPARATOR, REQUEST_METHODS } from '../consts';
+import { URL_SEPARATOR, REQUEST_METHODS } from 'common/consts';
 import { Headers, RequestParameters } from './interfaces';
-import { EntityResponse } from '../interfaces';
+import { EntityResponse } from 'common/interfaces';
 
 export class HttpService {
     private static instance: HttpService;

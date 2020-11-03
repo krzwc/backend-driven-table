@@ -1,13 +1,13 @@
-import { CommonThunkAction, EntitiesAction, EntityData } from '../interfaces';
-import { HttpService } from '../../http-service/http-service';
+import { CommonThunkAction, EntitiesAction, EntityData } from 'common/store/interfaces';
+import { HttpService } from 'common/http-service/http-service';
 
 import { failureHandler } from './helpers/failure-handler';
 import { entityRequestStart } from './action-request-start';
 import { getActionSettings } from './helpers/get-action-settings';
 import { readDependencies } from './read-dependencies';
-import { EntityResponse } from '../../interfaces';
-import { ResponseError } from '../../http-service/interfaces';
-import { ENTITY_ACTIONS, ENTITY_ACTION_TYPES, ENTITY_TYPES } from '../../consts';
+import { EntityResponse } from 'common/interfaces';
+import { ResponseError } from 'common/http-service/interfaces';
+import { ENTITY_ACTIONS, ENTITY_ACTION_TYPES, ENTITY_TYPES } from 'common/consts';
 
 const http = HttpService.getInstance();
 

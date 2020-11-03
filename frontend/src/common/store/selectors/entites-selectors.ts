@@ -1,8 +1,7 @@
 import { List, Map } from 'immutable';
 import { createSelector, OutputSelector } from 'reselect';
-
-import { ENTITY_TYPES } from '../../consts';
-import { Entity } from '../../interfaces';
+import { ENTITY_TYPES } from 'common/consts';
+import { Entity } from 'common/interfaces';
 import { stateSelector } from './state-selector';
 import { StoreState } from '../interfaces';
 
