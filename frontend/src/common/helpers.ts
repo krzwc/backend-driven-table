@@ -1,4 +1,7 @@
-export const isEmpty = (value: any): boolean => {
+import { ObjectType } from './interfaces';
+import { Model } from './interfaces';
+
+export const isEmpty = (value: unknown): boolean => {
     if (typeof value === 'undefined') {
         return true;
     }
@@ -19,14 +22,14 @@ export const isEmpty = (value: any): boolean => {
     return false;
 };
 
-export const isNotEmpty = (value: any): boolean => !isEmpty(value);
+export const isNotEmpty = (value: unknown): boolean => !isEmpty(value);
 
-export const noop = () => undefined;
+export const noop = (): undefined => undefined;
 
-export const isFunction = (functionToCheck: any): boolean =>
+export const isFunction = (functionToCheck: unknown): boolean =>
     functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
 
-export const get = (object: object, path: string | string[], value: any) => {
+export const get = (object: ObjectType | Model, path: string | string[], value: unknown): unknown => {
     const pathArray = Array.isArray(path) ? path : path.split('.').filter((key) => key);
     const pathArrayFlat = pathArray.flatMap((part: any) => (typeof part === 'string' ? part.split('.') : part));
 

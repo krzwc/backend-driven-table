@@ -11,7 +11,7 @@ export const readDependencies = (
     dependencies: EntityDependency[],
     state: StoreState,
     dispatch: CommonThunkDispatch,
-) => {
+): void => {
     const dependenciesSettings = dependencies.map(({ entityType }) => {
         const actionSettings = getActionSettings({ entityType, actionType: ENTITY_ACTION_TYPES.READ }, state);
 
@@ -22,7 +22,7 @@ export const readDependencies = (
             actionSettings,
             requestPromise: customRequestMethod
                 ? customRequestMethod({ ...actionSettings, initiateByDependency: true }, state)
-                : http.get(url!, headers),
+                : http.get(url, headers),
         };
     });
 
@@ -33,7 +33,7 @@ export const readDependencies = (
                 const singleResponse = transformResponseBody
                     ? transformResponseBody(responses[index])
                     : responses[index];
-                const { data, ...rest } = singleResponse;
+                const { data /* ...rest */ } = singleResponse;
                 const payload = data ? { data } : { data: singleResponse };
 
                 dispatch({

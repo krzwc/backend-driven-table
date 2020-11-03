@@ -46,7 +46,7 @@ export const Table: FunctionComponent = () => {
         <DataProvider entityType={ENTITY_TYPES.TABLE_DATA}>
             {({ entityData: { data: tableData, status: tableStatus }, dependenciesData }) => {
                 const {
-                    entityData: { data: configData, status: configStatus },
+                    entityData: { data: configData /* status: configStatus */ },
                 } = dependenciesData[0];
                 if (tableStatus === REQUEST_STATUSES.PENDING) {
                     return <Loader />;
@@ -54,22 +54,22 @@ export const Table: FunctionComponent = () => {
 
                 return isNotEmpty(tableData) && isNotEmpty(configData) ? (
                     <div className="table-container">
-                    <ColumnsSelector
+                        <ColumnsSelector
                             visibleColumns={visibleColumns}
                             configData={configData}
-                        columns={defaultColumnsNames}
-                        setVisibleColumns={setVisibleColumns}
-                      />
-                    <AntdTable
+                            columns={defaultColumnsNames}
+                            setVisibleColumns={setVisibleColumns}
+                        />
+                        <AntdTable
                             dataSource={tableData}
-                          columns={filterVisibleColumns(defaultColumns, visibleColumns)}
+                            columns={filterVisibleColumns(defaultColumns, visibleColumns)}
                             pagination={{ showSizeChanger: false }}
                         />
-                  </div>
+                    </div>
                 ) : (
                     <div />
                 );
             }}
-      </DataProvider>
+        </DataProvider>
     );
 };

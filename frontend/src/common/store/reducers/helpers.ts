@@ -1,4 +1,4 @@
-import { fromJS, List } from 'immutable';
+import { fromJS, List, Map } from 'immutable';
 import { Entity } from '../../interfaces';
 import { EntitiesPayload } from '../interfaces';
 import { isNotEmpty } from '../../helpers';
@@ -11,7 +11,11 @@ export const basicStoreKeys = [
     'additionalData' */
 ];
 
-export const updateSingleEntity = (stateEntities: List<Entity>, data: { [key: string]: any }, replaceMode: boolean) => {
+export const updateSingleEntity = (
+    stateEntities: List<Entity>,
+    data: { [key: string]: any },
+    replaceMode = false,
+): List<Entity> => {
     if (replaceMode) {
         return fromJS(data);
     }
@@ -35,9 +39,9 @@ interface MutateState {
 }
 
 export const mutateState = ({ key, payload }: MutateState) => (
-    mutableState: any,
+    mutableState: Map<unknown, unknown>,
     mutatedObject: { [key: string]: any } = {} as EntitiesPayload,
-) => {
+): any => {
     if (
         mutatedObject[key] ||
         (isNotEmpty(payload[key as keyof EntitiesPayload]) && payload[key as keyof EntitiesPayload])

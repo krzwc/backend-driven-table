@@ -17,8 +17,8 @@ interface UpdateEntity {
     entityType: ENTITY_TYPES;
     entityData: EntityData;
     callbacks: {
-        onSuccess: (param: EntityResponse) => {};
-        onFailure: (param: ResponseError) => {};
+        onSuccess: (param: EntityResponse) => void;
+        onFailure: (param: ResponseError) => void;
     };
 }
 
@@ -68,12 +68,12 @@ export const updateEntity = ({
               },
               state,
           )
-        : http.put(url!, headers, body);
+        : http.put(url, headers, body);
 
     return method
         .then((response) => {
             const transformedResponse = transformResponseBody ? transformResponseBody(response) : response;
-            const { data, ...rest } = transformedResponse;
+            const { data /* ...rest */ } = transformedResponse;
 
             const payload = data
                 ? {
@@ -109,8 +109,8 @@ export const updateEntity = ({
                     entityType,
                     onFailure,
                 },
-                state,
-                dispatch,
+                /* state,
+                dispatch, */
             ),
         );
 };

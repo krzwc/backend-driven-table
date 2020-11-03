@@ -15,8 +15,8 @@ export type CustomRequestMethod<ResponseInterface> = (
 ) => Promise<ResponseInterface>;
 
 export interface ResponseError {
-    error_description?: string;
-    description?: string;
-    message?: string;
-    __status?: number;
+    error_description: string;
+    description: string;
+    message: string;
+    __status: number;
 }

@@ -50,8 +50,8 @@ const mapStateToPropsFactory: MapStateToPropsFactory<StateToProps, DataProviderP
     const dependantEntities = MODELS[entityType].dependencies;
     const areDependantEntities = isNotEmpty(dependantEntities);
     let dependantEntitiesSelectors: DependantEntitiesSelectors[];
-    if (areDependantEntities) {
-        dependantEntitiesSelectors = dependantEntities!.map((dependantEntityType) => ({
+    if (dependantEntities) {
+        dependantEntitiesSelectors = dependantEntities.map((dependantEntityType) => ({
             entityType: dependantEntityType.entityType,
             entitySelector: entitiesSelector(dependantEntityType.entityType),
         }));
@@ -75,12 +75,12 @@ const mapStateToPropsFactory: MapStateToPropsFactory<StateToProps, DataProviderP
 };
 
 export class DataProvider extends Component<StateToProps & DataProviderProps & DispatchToProps> {
-    public componentDidMount() {
+    public componentDidMount = (): void => {
         const { readEntityAction, entityType } = this.props;
         readEntityAction({ entityType, entityData: {} });
-    }
+    };
 
-    public render = () => {
+    public render = (): ReactNode => {
         const { children, entityData, dependenciesData } = this.props;
         return children({ entityData, dependenciesData });
     };

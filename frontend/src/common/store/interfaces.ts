@@ -9,11 +9,13 @@ export type StoreState = ImmutableMap<{
     };
 }>;
 
+export interface EntitiesPayloadData {
+    [key: string]: any;
+}
+
 export interface EntitiesPayload {
     entityType: ENTITY_TYPES;
-    data?: {
-        [key: string]: any;
-    };
+    data?: EntitiesPayloadData;
     replaceMode?: boolean;
     /* filters?: any;
     page?: any;

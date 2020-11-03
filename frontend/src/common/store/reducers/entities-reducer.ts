@@ -5,9 +5,9 @@ import { basicStoreKeys, updateSingleEntity, mutateState } from './helpers';
 
 const initialState = Map();
 
-export const entitiesReducer = (state = initialState, action: EntitiesAction) => {
+export const entitiesReducer = (state = initialState, action: EntitiesAction): Map<unknown, unknown> => {
     const { type, payload } = action;
-    const { data, entityType, replaceMode } = payload || ({} as EntitiesPayload);
+    const { data = {}, entityType, replaceMode } = payload || ({} as EntitiesPayload);
 
     switch (type) {
         case ENTITY_ACTIONS.ENTITY_REQUEST_START:
@@ -20,11 +20,7 @@ export const entitiesReducer = (state = initialState, action: EntitiesAction) =>
             if (type === ENTITY_ACTIONS.READ_ENTITY_SUCCESS) {
                 updatedEntitiesData = Array.isArray(data) ? data : [data];
             } else {
-                updatedEntitiesData = updateSingleEntity(
-                    state.getIn([entityType, 'data'], List()),
-                    data!,
-                    replaceMode!,
-                );
+                updatedEntitiesData = updateSingleEntity(state.getIn([entityType, 'data'], List()), data, replaceMode);
             }
 
             return state.withMutations((mutableState) => {

@@ -16,8 +16,8 @@ interface ReadEntity {
     entityType: ENTITY_TYPES;
     entityData: EntityData;
     callbacks: {
-        onSuccess: (param: EntityResponse) => {};
-        onFailure: (param: ResponseError) => {};
+        onSuccess: (param: EntityResponse) => void;
+        onFailure: (param: ResponseError) => void;
     };
 }
 
@@ -51,12 +51,12 @@ export const readEntity = ({
 
     const method = customRequestMethod
         ? customRequestMethod(actionSettings, entityData, state)
-        : http.get(url!, headers);
+        : http.get(url, headers);
 
     return method
         .then((response) => {
             const transformedResponse = transformResponseBody ? transformResponseBody(response) : response;
-            const { data, ...rest } = transformedResponse;
+            const { data /* , ...rest */ } = transformedResponse;
 
             const payload = data ? { data: data || [] } : { data: transformedResponse };
 
@@ -78,5 +78,5 @@ export const readEntity = ({
                 },
             });
         })
-        .catch(failureHandler({ entityType, onFailure }, state, dispatch));
+        .catch(failureHandler({ entityType, onFailure } /* , state, dispatch */));
 };

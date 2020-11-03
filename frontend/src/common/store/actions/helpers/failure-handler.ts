@@ -1,23 +1,25 @@
 import { ENTITY_TYPES } from '../../../consts';
 import { ResponseError } from '../../../http-service/interfaces';
-import { CommonThunkDispatch, StoreState } from '../../interfaces';
+/* import { CommonThunkDispatch, StoreState } from '../../interfaces'; */
 
-export const showErrorNotification = (errorMsg: string) => console.log(errorMsg);
+export const showErrorNotification = (errorMsg: string): void => {
+    /* eslint-disable */
+    console.log(errorMsg);
+};
 
 interface FailureHandlerSettings {
     entityType: ENTITY_TYPES;
     onFailure?(error: ResponseError): void;
 }
 
-export const failureHandler = (
-    { onFailure, entityType }: FailureHandlerSettings,
-    state: StoreState,
-    dispatch: CommonThunkDispatch,
-) => (error: ResponseError) => {
-    showErrorNotification(error.message!);
-    if (onFailure) {
-        onFailure(error);
-    }
+export const failureHandler = ({ onFailure /* , entityType */ }: FailureHandlerSettings) =>
+    /* state: StoreState,
+    dispatch: CommonThunkDispatch, */
+    (error: ResponseError): void => {
+        showErrorNotification(error.message);
+        if (onFailure) {
+            onFailure(error);
+        }
 
-    /* return dispatch(entityRequestFailure(entityType)); */
-};
+        /* return dispatch(entityRequestFailure(entityType)); */
+    };

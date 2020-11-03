@@ -1,10 +1,11 @@
 import { URL_SEPARATOR, REQUEST_METHODS } from '../consts';
 import { Headers, RequestParameters } from './interfaces';
+import { EntityResponse } from '../interfaces';
 
 export class HttpService {
     private static instance: HttpService;
 
-    public static getInstance() {
+    public static getInstance(): HttpService {
         if (!HttpService.instance) {
             HttpService.instance = new HttpService();
         }
@@ -23,18 +24,18 @@ export class HttpService {
         return url;
     }
 
-    public get = (url: string | URL, headers: Headers = {}) => this.request({ url, headers });
+    public get = (url: string | URL, headers: Headers = {}): Promise<EntityResponse> => this.request({ url, headers });
 
-    public post = (url: string | URL, headers: Headers = {}, body: BodyInit) =>
+    public post = (url: string | URL, headers: Headers = {}, body: BodyInit): Promise<EntityResponse> =>
         this.request({ url, headers, body, method: REQUEST_METHODS.POST });
 
-    public put = (url: string | URL, headers: Headers = {}, body: BodyInit) =>
+    public put = (url: string | URL, headers: Headers = {}, body: BodyInit): Promise<EntityResponse> =>
         this.request({ url, headers, body, method: REQUEST_METHODS.PUT });
 
-    public delete = (url: string | URL, headers: Headers = {}) =>
+    public delete = (url: string | URL, headers: Headers = {}): Promise<EntityResponse> =>
         this.request({ url, headers, method: REQUEST_METHODS.DELETE });
 
-    public enhanceHeaders = (headers: Headers) => {
+    public enhanceHeaders = (headers: Headers = {}): Headers => {
         return {
             'content-type': 'application/json',
             ...headers,
