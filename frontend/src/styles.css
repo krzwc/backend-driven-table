@@ -1,33 +1,39 @@
 html,
 body {
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .table-container {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .ant-btn {
-  align-self: flex-end;
+    align-self: flex-end;
 }
 
 .popover-content button {
-  float:right; 
-  clear:right;
-  overflow: auto;
+    float: right;
+    clear: right;
+    overflow: auto;
 }
 
 .popover-content::after {
-  content: "";
-  clear: both;
-  display: table;
+    content: '';
+    clear: both;
+    display: table;
 }
 
 .popover-content .ant-checkbox-group-item {
-  display: block;
-  margin-right: 0;
+    display: block;
+    margin-right: 0;
+}
+
+.table-header-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }

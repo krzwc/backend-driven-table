@@ -37,9 +37,20 @@ export const entitiesReducer = (state = initialState, action: EntitiesAction): M
                 mutableState.setIn([entityType, 'status'], REQUEST_STATUSES.SUCCESS);
                 mutableState.updateIn([entityType, 'data'], (current) => current.push(fromJS(data)));
             });
+        case ENTITY_ACTIONS.DELETE_ENTITY_SUCCESS:
+            return state.withMutations((mutableState) => {
+                mutableState.setIn([entityType, 'status'], REQUEST_STATUSES.SUCCESS);
+                mutableState.setIn(
+                    [entityType, 'data'],
+                    mutableState.getIn([entityType, 'data']).filter((instance: any) => instance.get('id') !== data.id),
+                );
+            });
         case ENTITY_ACTIONS.ENTITY_REQUEST_FAILURE:
             return state.withMutations((mutableState) => {
                 mutableState.setIn([entityType, 'status'], REQUEST_STATUSES.FAILURE);
+                if (replaceMode) {
+                    //TODO: clear entity state
+                }
             });
         default:
             return state;

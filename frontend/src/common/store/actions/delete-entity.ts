@@ -5,14 +5,14 @@ import { entityRequestStart } from './action-request-start';
 import { getActionSettings } from './helpers/get-action-settings';
 import { EntityResponse } from 'common/interfaces';
 import { ResponseError } from 'common/http-service/interfaces';
-import { ENTITY_ACTIONS, ENTITY_ACTION_TYPES, ENTITY_TYPES } from 'common/consts';
+import { ENTITY_ACTION_TYPES, ENTITY_TYPES, ENTITY_ACTIONS } from 'common/consts';
 import { readDependencies } from './read-dependencies';
 /* import { isEqual } from '../../helpers'; */
 
 const http = HttpService.getInstance();
 
-interface UpdateEntity {
-    actions: { settingsActionType: ENTITY_ACTION_TYPES; successAction: ENTITY_ACTIONS };
+interface DeleteEntity {
+    actions: { actionType: ENTITY_ACTION_TYPES; successAction: ENTITY_ACTIONS };
     entityType: ENTITY_TYPES;
     entityData: EntityData;
     callbacks: {
@@ -21,31 +21,31 @@ interface UpdateEntity {
     };
 }
 
-export const updateEntity = ({
+export const deleteEntity = ({
     actions = {
-        successAction: ENTITY_ACTIONS.UPDATE_ENTITY_SUCCESS,
-        settingsActionType: ENTITY_ACTION_TYPES.UPDATE,
+        successAction: ENTITY_ACTIONS.DELETE_ENTITY_SUCCESS,
+        actionType: ENTITY_ACTION_TYPES.DELETE,
     },
     entityType,
     entityData = {} as EntityData,
     callbacks,
-}: UpdateEntity): CommonThunkAction<void | EntitiesAction> => (dispatch, getState) => {
+}: DeleteEntity): CommonThunkAction<void | EntitiesAction> => (dispatch, getState) => {
     const state = getState();
     const { onSuccess, onFailure } = callbacks || {};
-    const { settingsActionType, successAction } = actions;
+    const { actionType, successAction } = actions;
     const actionSettings = getActionSettings(
         {
             entityType,
             entityData,
-            actionType: settingsActionType,
+            actionType,
         },
         state,
     );
     const {
         url,
         headers,
-        replaceMode,
         dependencies,
+        replaceMode,
         customRequestMethod,
         transformRequestBody,
         transformResponseBody,
@@ -67,20 +67,13 @@ export const updateEntity = ({
               },
               state,
           )
-        : http.put(url, headers, body);
+        : http.delete(url, headers);
 
     return method
         .then((response) => {
             const transformedResponse = transformResponseBody ? transformResponseBody(response) : response;
-            const { data /* ...rest */ } = transformedResponse;
 
-            const payload = data
-                ? {
-                      data: data || [],
-                  }
-                : {
-                      data: transformedResponse,
-                  };
+            const payload = { data: entityData.id };
 
             if (onSuccess) {
                 onSuccess(transformedResponse);
@@ -97,7 +90,6 @@ export const updateEntity = ({
                 type: successAction,
                 payload: {
                     entityType,
-                    replaceMode,
                     ...payload,
                 },
             });

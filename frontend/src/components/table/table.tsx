@@ -1,12 +1,12 @@
-import React, { useState, FunctionComponent } from 'react';
+import React, { useState, FunctionComponent, ReactText } from 'react';
 import { Table as AntdTable } from 'antd';
 import DataProvider from 'wrappers/data-provider/data-provider';
 import { ENTITY_TYPES, REQUEST_STATUSES } from 'common/consts';
-
 import ColumnsSelector from 'components/columns-selector/columns-selector';
 import { filterVisibleColumns } from './helpers';
 import { isNotEmpty } from 'common/helpers';
 import { Loader } from 'components/loader/loader';
+import DeleteButton from 'components/delete-button/delete-button';
 
 const defaultColumns = [
     {
@@ -41,6 +41,7 @@ const defaultVisible = ['first_name', 'last_name', 'email'];
 
 export const Table: FunctionComponent = () => {
     const [visibleColumns, setVisibleColumns] = useState(defaultVisible);
+    const [selectedRowKeys, setSelectedRowKeys] = useState([] as ReactText[]);
 
     return (
         <DataProvider entityType={ENTITY_TYPES.TABLE_DATA}>
@@ -48,20 +49,25 @@ export const Table: FunctionComponent = () => {
                 const {
                     entityData: { data: configData /* status: configStatus */ },
                 } = dependenciesData[0];
-                if (tableStatus === REQUEST_STATUSES.PENDING) {
+                const isLoading = tableStatus === REQUEST_STATUSES.PENDING;
+                if (isLoading) {
                     return <Loader />;
                 }
 
                 return isNotEmpty(tableData) && isNotEmpty(configData) ? (
                     <div className="table-container">
-                        <ColumnsSelector
-                            visibleColumns={visibleColumns}
-                            configData={configData}
-                            columns={defaultColumnsNames}
-                            setVisibleColumns={setVisibleColumns}
-                        />
+                        <div className="table-header-actions">
+                            <DeleteButton selectedRowKeys={selectedRowKeys} isLoading={isLoading} />
+                            <ColumnsSelector
+                                visibleColumns={visibleColumns}
+                                configData={configData}
+                                columns={defaultColumnsNames}
+                                setVisibleColumns={setVisibleColumns}
+                            />
+                        </div>
                         <AntdTable
                             dataSource={tableData}
+                            rowSelection={{ selectedRowKeys, onChange: setSelectedRowKeys }}
                             columns={filterVisibleColumns(defaultColumns, visibleColumns)}
                             pagination={{ showSizeChanger: false }}
                         />

@@ -38,6 +38,7 @@ export const readEntity = ({
         url,
         headers,
         dependencies,
+        replaceMode,
         customRequestMethod,
         transformResponseBody,
         /* notifications: { success, fail } */
@@ -78,5 +79,5 @@ export const readEntity = ({
                 },
             });
         })
-        .catch(failureHandler({ entityType, onFailure } /* , state, dispatch */));
+        .catch(failureHandler({ entityType, onFailure, replaceMode }, state, dispatch));
 };
