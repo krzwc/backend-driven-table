@@ -6,8 +6,7 @@ import { getActionSettings } from './helpers/get-action-settings';
 import { EntityResponse } from 'common/interfaces';
 import { ResponseError } from 'common/http-service/interfaces';
 import { ENTITY_ACTION_TYPES, ENTITY_TYPES, ENTITY_ACTIONS } from 'common/consts';
-import { readDependencies } from './read-dependencies';
-/* import { isEqual } from '../../helpers'; */
+/* import { readDependencies } from './read-dependencies'; */
 
 const http = HttpService.getInstance();
 
@@ -31,7 +30,7 @@ export const deleteEntity = ({
     callbacks,
 }: DeleteEntity): CommonThunkAction<void | EntitiesAction> => (dispatch, getState) => {
     const state = getState();
-    const { onSuccess, onFailure } = callbacks || {};
+    const { /* onSuccess, */ onFailure } = callbacks || {};
     const { actionType, successAction } = actions;
     const actionSettings = getActionSettings(
         {
@@ -44,11 +43,11 @@ export const deleteEntity = ({
     const {
         url,
         headers,
-        dependencies,
+        /* dependencies, */
         replaceMode,
         customRequestMethod,
         transformRequestBody,
-        transformResponseBody,
+        /* transformResponseBody, */
         /* notifications: { success, fail } */
     } = actionSettings;
 
@@ -71,20 +70,21 @@ export const deleteEntity = ({
 
     return method
         .then((response) => {
-            const transformedResponse = transformResponseBody ? transformResponseBody(response) : response;
+            /*  const transformedResponse = transformResponseBody ? transformResponseBody(response) : response;
+            console.log(transformedResponse); */
 
-            const payload = { data: entityData.id };
+            const payload = { data: response.data };
 
-            if (onSuccess) {
+            /* if (onSuccess) {
                 onSuccess(transformedResponse);
-            }
+            } */
 
-            if (dependencies && dependencies.length) {
+            /* if (dependencies && dependencies.length) {
                 readDependencies(dependencies, state, dispatch);
                 if (dependencies.some(({ entityType: type }) => type === entityType)) {
                     return;
                 }
-            }
+            } */
 
             return dispatch({
                 type: successAction,

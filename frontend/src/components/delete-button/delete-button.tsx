@@ -31,7 +31,7 @@ export const DeleteButton: FunctionComponent<DeleteButtonProps & DispatchToProps
 }) => {
     const onClickHandler = () => {
         selectedRowKeys.forEach((key) => {
-            deleteEntityAction({ entityType: ENTITY_TYPES.TABLE_DATA, entityData: { key } });
+            deleteEntityAction({ entityType: ENTITY_TYPES.TABLE_DATA, entityData: { id: key } });
         });
     };
 

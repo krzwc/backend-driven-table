@@ -42,7 +42,9 @@ export const entitiesReducer = (state = initialState, action: EntitiesAction): M
                 mutableState.setIn([entityType, 'status'], REQUEST_STATUSES.SUCCESS);
                 mutableState.setIn(
                     [entityType, 'data'],
-                    mutableState.getIn([entityType, 'data']).filter((instance: any) => instance.get('id') !== data.id),
+                    mutableState.getIn([entityType, 'data']).filter((instance: any) => {
+                        return instance.get('id') !== Number(data.id);
+                    }),
                 );
             });
         case ENTITY_ACTIONS.ENTITY_REQUEST_FAILURE:

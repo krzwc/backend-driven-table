@@ -1,3 +1,5 @@
+import { EntitiesPayloadData } from 'common/store/interfaces';
+
 export enum ENTITY_ACTION_TYPES {
     CREATE = 'CREATE',
     READ = 'READ',
@@ -34,6 +36,7 @@ export const BASE_URL = 'http://0.0.0.0:5000';
 export const URLS = {
     TABLE_DATA: 'table-data',
     TABLE_CONFIG: 'table-config',
+    SINGLE_ITEM: (data: EntitiesPayloadData): string => String(data.id),
 };
 
 export enum REQUEST_STATUSES {

@@ -11,11 +11,14 @@ with open('mock_data.json') as json_file:
 
 @app.route('/table-data')
 def get_data():
-    return json.dumps({'data': data})
+        return json.dumps({'data': data})
 
+@app.route('/table-data/<id>', methods=['DELETE'])
+def delete_data(id):
+    return json.dumps({'data': { 'id': id }})
 
 @app.route('/table-config', methods=['POST', 'PUT'])
-def index():
+def get_table_config():
     if request.method == 'PUT':
         print(request.data)
         return request.data
