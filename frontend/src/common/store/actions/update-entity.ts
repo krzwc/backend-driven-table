@@ -7,7 +7,8 @@ import { EntityResponse } from 'common/interfaces';
 import { ResponseError } from 'common/http-service/interfaces';
 import { ENTITY_ACTIONS, ENTITY_ACTION_TYPES, ENTITY_TYPES } from 'common/consts';
 import { readDependencies } from './read-dependencies';
-/* import { isEqual } from '../../helpers'; */
+import { noop, isFunction } from '../../helpers';
+import isEqual from 'lodash.isequal';
 
 const http = HttpService.getInstance();
 
@@ -52,7 +53,14 @@ export const updateEntity = ({
         /* notifications: { success, fail } */
     } = actionSettings;
 
-    // TODO: if transformedRequestBody === entityData.body -> ignore
+    const transformedRequestBody = isFunction(transformRequestBody)
+        ? transformRequestBody(entityData.body, entityData, state)
+        : entityData.body;
+
+    if (isEqual(entityData.body, transformedRequestBody)) {
+        // TODO: show success notification -> Nothing to update
+        return new Promise<void>(noop);
+    }
 
     dispatch(entityRequestStart(entityType));
 
