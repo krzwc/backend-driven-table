@@ -1,5 +1,5 @@
 import { Model, BaseModelProps, EntityResponse } from 'common/interfaces';
-import { HttpService } from 'common/http-service/http-service';
+import { HttpService } from 'common/http-service';
 import { BASE_URL, URLS, ENTITY_TYPES, ENTITY_ACTION_TYPES } from 'common/consts';
 import { Data } from 'components/table/interfaces';
 import { EntitiesPayloadData } from 'common/store/interfaces';

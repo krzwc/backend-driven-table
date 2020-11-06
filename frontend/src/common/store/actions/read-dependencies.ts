@@ -1,9 +1,8 @@
 import { ENTITY_ACTIONS, ENTITY_ACTION_TYPES } from 'common/consts';
-import { HttpService } from 'common/http-service/http-service';
+import { HttpService } from 'common/http-service';
 import { EntityDependency } from 'common/interfaces';
 import { CommonThunkDispatch, StoreState } from 'common/store/interfaces';
-import { getActionSettings } from './helpers/get-action-settings';
-import { showErrorNotification } from './helpers/failure-handler';
+import { getActionSettings, showErrorNotification } from './helpers';
 
 const http = HttpService.getInstance();
 

@@ -1,5 +1,5 @@
 import { ENTITY_ACTION_TYPES, ENTITY_TYPES } from './consts';
-import { Headers, CustomRequestMethod } from './http-service/interfaces';
+import { Headers, CustomRequestMethod } from './http-service';
 import { StoreState } from './store/interfaces';
 
 export interface Entity {

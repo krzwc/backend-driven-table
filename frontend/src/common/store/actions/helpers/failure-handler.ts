@@ -1,5 +1,5 @@
 import { ENTITY_TYPES } from 'common/consts';
-import { ResponseError } from 'common/http-service/interfaces';
+import { ResponseError } from 'common/http-service';
 import { CommonThunkDispatch, StoreState } from 'common/store/interfaces';
 import { entityRequestFailure } from '../entity-request-failure';
 import { EntitiesAction } from 'common/store/interfaces';

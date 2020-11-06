@@ -1,10 +1,8 @@
 import { CommonThunkAction, EntitiesAction, EntityData } from 'common/store/interfaces';
-import { HttpService } from 'common/http-service/http-service';
-import { failureHandler } from './helpers/failure-handler';
+import { HttpService, ResponseError } from 'common/http-service';
 import { entityRequestStart } from './action-request-start';
-import { getActionSettings } from './helpers/get-action-settings';
+import { getActionSettings, failureHandler } from './helpers';
 import { EntityResponse } from 'common/interfaces';
-import { ResponseError } from 'common/http-service/interfaces';
 import { ENTITY_ACTION_TYPES, ENTITY_TYPES, ENTITY_ACTIONS } from 'common/consts';
 /* import { readDependencies } from './read-dependencies'; */
 

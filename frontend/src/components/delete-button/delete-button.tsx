@@ -1,10 +1,10 @@
 import React, { FunctionComponent, ReactText } from 'react';
+import { connect } from 'react-redux';
 import { Button } from 'antd';
 import { isEmpty } from 'common/helpers';
 import { deleteEntity } from 'common/store/actions/delete-entity';
 import { ENTITY_TYPES } from 'common/consts';
 import { EntityData } from 'common/store/interfaces';
-import { connect } from 'react-redux';
 
 interface DeleteButtonProps {
     selectedRowKeys: ReactText[];

@@ -1,7 +1,7 @@
 import React, { FunctionComponent, Dispatch, SetStateAction, useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { Popover as AntdPopover, Button, Checkbox } from 'antd';
 import { SlidersOutlined } from '@ant-design/icons';
-import { connect } from 'react-redux';
 import { updateEntity } from 'common/store/actions/update-entity';
 import { ENTITY_TYPES } from 'common/consts';
 import { EntityData } from 'common/store/interfaces';

@@ -1,5 +1,4 @@
-import { ObjectType } from './interfaces';
-import { Model } from './interfaces';
+import { ObjectType, Model } from './interfaces';
 
 export const isEmpty = (value: unknown): boolean => {
     if (typeof value === 'undefined') {

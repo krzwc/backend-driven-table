@@ -1,7 +1,7 @@
 import { MODELS } from 'common/models/index';
 import { BaseModelProps } from 'common/interfaces';
 import { StoreState, EntityData } from 'common/store/interfaces';
-import { HttpService } from 'common/http-service/http-service';
+import { HttpService } from 'common/http-service';
 import { ENTITY_ACTION_TYPES, ENTITY_TYPES } from 'common/consts';
 import { get } from 'common/helpers';
 import { ObjectType } from 'common/interfaces';
@@ -16,7 +16,7 @@ interface RequestData {
 
 type EntityActionRequestSettings = Required<BaseModelProps>;
 
-export type GetRequestSettings = (data: RequestData, state: StoreState) => EntityActionRequestSettings;
+type GetRequestSettings = (data: RequestData, state: StoreState) => EntityActionRequestSettings;
 
 export const getActionSettings: GetRequestSettings = ({ entityType, actionType }, _state: StoreState) => {
     const model = MODELS[entityType];
