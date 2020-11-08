@@ -41,12 +41,10 @@ module.exports = {
                 test: /\.(png|svg|jpg|gif)$/i,
                 use: ['file-loader'],
             },
-            {
-                enforce: 'pre',
-                test: /\.js$/,
-                loader: 'source-map-loader',
-            },
         ],
     },
-    plugins: [new ESLintPlugin()],
+    devtool: 'eval-cheap-module-source-map',
+    plugins: [
+        new ESLintPlugin(), 
+    ],
 };
