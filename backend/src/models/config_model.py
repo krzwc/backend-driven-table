@@ -42,3 +42,14 @@ class ConfigModel(db.Model):
     @staticmethod
     def get_one_config(id):
         return ConfigModel.query.get(id)
+
+
+class ConfigSchema(Schema):
+    """
+    Config Schema
+    """
+    id = fields.Int(dump_only=True)
+    table = fields.Str(required=True)
+    fields = fields.Str(required=True)
+    created_at = fields.DateTime(dump_only=True)
+    modified_at = fields.DateTime(dump_only=True)

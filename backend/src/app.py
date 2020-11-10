@@ -2,11 +2,18 @@ from flask import Flask, request
 from flask_cors import CORS, cross_origin
 import json
 from .config import app_config
+from .models import db
 
 
 def create_app(env_name):
+    """
+    Create app
+    """
     app = Flask(__name__)
     app.config.from_object(app_config[env_name])
+
+    db.init_app(app)
+
     CORS(app)
 
     with open('src/mock_data.json') as json_file:
