@@ -1,6 +1,7 @@
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
 import json
+
 from .config import app_config
 from .models import db
 

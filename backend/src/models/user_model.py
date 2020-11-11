@@ -1,5 +1,4 @@
 from marshmallow import fields, Schema
-import datetime
 from . import db
 
 
@@ -17,8 +16,6 @@ class UserModel(db.Model):
     email = db.Column(db.String(128), unique=True, nullable=False)
     gender = db.Column(db.String(128), nullable=True)
     ip_address = db.Column(db.String(128), nullable=True)
-    created_at = db.Column(db.DateTime)
-    modified_at = db.Column(db.DateTime)
 
     # class constructor
     def __init__(self, data):
@@ -30,8 +27,6 @@ class UserModel(db.Model):
         self.email = data.get('email')
         self.gender = data.get('gender')
         self.ip_address = data.get('ip_address')
-        self.created_at = datetime.datetime.utcnow()
-        self.modified_at = datetime.datetime.utcnow()
 
     def save(self):
         db.session.add(self)
@@ -40,7 +35,6 @@ class UserModel(db.Model):
     def update(self, data):
         for key, item in data.items():
             setattr(self, key, item)
-        self.modified_at = datetime.datetime.utcnow()
         db.session.commit()
 
     def delete(self):
@@ -69,5 +63,3 @@ class UserSchema(Schema):
     email = fields.Email(required=True)
     gender = fields.Str(required=True)
     ip_address = fields.Str(required=True)
-    created_at = fields.DateTime(dump_only=True)
-    modified_at = fields.DateTime(dump_only=True)
