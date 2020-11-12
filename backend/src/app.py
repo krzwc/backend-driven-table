@@ -5,6 +5,8 @@ import json
 from .config import app_config
 from .models import db
 
+from .views.user_view import user_api as user_blueprint
+
 
 def create_app(env_name):
     """
@@ -16,6 +18,8 @@ def create_app(env_name):
     db.init_app(app)
 
     CORS(app)
+
+    app.register_blueprint(user_blueprint, url_prefix='/users')
 
     with open('src/mock_data.json') as json_file:
         data = json.load(json_file)
