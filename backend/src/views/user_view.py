@@ -52,8 +52,22 @@ def get_a_user(user_id):
     if not user:
         return custom_response({'error': 'user not found'}, 404)
 
-    ser_user = user_schema.dump(user).data
-    return custom_response(ser_user, 200)
+    ser_user = user_schema.dump(user)
+    return custom_response({'data': ser_user}, 200)
+
+
+# @user_api.route('/<int:user_id>', methods=['DELETE'])
+# # @Auth.auth_required
+# def delete_a_user(user_id):
+#     """
+#     Delete a single user
+#     """
+#     user = UserModel.delete_one_user(user_id)
+#     if not user:
+#         return custom_response({'error': 'user not found'}, 404)
+
+#     ser_user = user_schema.dump(user)
+#     return custom_response({'data': user_id}, 201)
 
 
 # @user_api.route('/me', methods=['PUT'])
@@ -73,15 +87,15 @@ def get_a_user(user_id):
 #     return custom_response(ser_user, 200)
 
 
-# @user_api.route('/me', methods=['DELETE'])
-# # @Auth.auth_required
-# def delete():
-#     """
-#     Delete a user
-#     """
-#     user = UserModel.get_one_user(g.user.get('id'))
-#     user.delete()
-#     return custom_response({'message': 'deleted'}, 204)
+@user_api.route('/<int:user_id>', methods=['DELETE'])
+# @Auth.auth_required
+def delete_a_user(user_id):
+    """
+    Delete a user
+    """
+    user = UserModel.get_one_user(user_id)
+    user.delete()
+    return custom_response({'data': user_id}, 201)
 
 
 # @user_api.route('/me', methods=['GET'])
