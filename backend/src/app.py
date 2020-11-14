@@ -6,6 +6,7 @@ from .config import app_config
 from .models import db
 
 from .views.user_view import user_api as user_blueprint
+from .views.config_view import config_api as config_blueprint
 
 
 def create_app(env_name):
@@ -19,7 +20,8 @@ def create_app(env_name):
 
     CORS(app)
 
-    app.register_blueprint(user_blueprint, url_prefix='/users')
+    app.register_blueprint(user_blueprint, url_prefix='/user-data')
+    app.register_blueprint(config_blueprint, url_prefix='/user-config')
 
     with open('src/mock_data.json') as json_file:
         data = json.load(json_file)

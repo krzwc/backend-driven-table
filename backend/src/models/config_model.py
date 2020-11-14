@@ -11,11 +11,11 @@ class ConfigModel(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     table = db.Column(db.String(128), nullable=False)
-    fields = db.Column(db.Text, nullable=False)
+    columns = db.Column(db.String(128), nullable=False)
 
     def __init__(self, data):
         self.table = data.get('table')
-        self.fields = data.get('fields')
+        self.columns = data.get('columns')
 
     def save(self):
         db.session.add(self)
@@ -31,12 +31,12 @@ class ConfigModel(db.Model):
         de.session.commit()
 
     @staticmethod
-    def get_all_config():
+    def get_all_tables_config():
         return ConfigModel.query.all()
 
     @staticmethod
-    def get_one_config(id):
-        return ConfigModel.query.get(id)
+    def get_config_by_table(value):
+        return ConfigModel.query.filter_by(table=value).first()
 
 
 class ConfigSchema(Schema):
@@ -45,4 +45,4 @@ class ConfigSchema(Schema):
     """
     id = fields.Int(dump_only=True)
     table = fields.Str(required=True)
-    fields = fields.Str(required=True)
+    columns = fields.Str(required=True)
