@@ -1,5 +1,6 @@
 from flask import request, json, Response, Blueprint
 from ..models.user_model import UserModel, UserSchema
+from marshmallow import ValidationError
 # from ..shared.authentication import Auth
 
 user_api = Blueprint('user_api', __name__)
@@ -12,13 +13,15 @@ def create():
     Create User Function
     """
     req_data = request.get_json()
-    data, error = user_schema.load(req_data)
-
-    if error:
-        return custom_response(error, 400)
+    # data, error = user_schema.load(req_data)
+    try:
+        data = user_schema.load(req_data)
+    except ValidationError as err:
+        print(err.messages)
+        print(err.valid_data)
 
     # check if user already exists in the db
-    user_in_db = UserModel.get_user_by_email(data.get('email'))
+    user_in_db = UserModel.get_user_by_email(req_data['email'])
     if user_in_db:
         message = {
             'error': 'User already exists, please provide another email address'}
@@ -26,9 +29,10 @@ def create():
 
     user = UserModel(data)
     user.save()
-    ser_data = user_schema.dump(user).data
-    token = Auth.generate_token(ser_data.get('id'))
-    return custom_response({'jwt_token': token}, 201)
+    ser_data = user_schema.dump(user)
+    return custom_response({'data': "OK"}, 201)
+    # token = Auth.generate_token(ser_data.get('id'))
+    # return custom_response({'jwt_token': token}, 201)
 
 
 @user_api.route('/', methods=['GET'])

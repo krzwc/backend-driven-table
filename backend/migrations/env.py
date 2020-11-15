@@ -1,8 +1,7 @@
 from __future__ import with_statement
+from flask import current_app
 from src.models.config_model import ConfigModel
 from src.models.user_model import UserModel
-from flask import current_app
-
 import logging
 from logging.config import fileConfig
 

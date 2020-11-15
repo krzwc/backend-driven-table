@@ -8,6 +8,8 @@ from .models import db
 from .views.user_view import user_api as user_blueprint
 from .views.config_view import config_api as config_blueprint
 
+from .mock_data import db_load_mock_data
+
 
 def create_app(env_name):
     """
@@ -17,6 +19,7 @@ def create_app(env_name):
     app.config.from_object(app_config[env_name])
 
     db.init_app(app)
+    db_load_mock_data(app, db)
 
     CORS(app)
 
