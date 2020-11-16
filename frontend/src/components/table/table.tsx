@@ -44,7 +44,7 @@ export const Table: FunctionComponent = () => {
     const [selectedRowKeys, setSelectedRowKeys] = useState([] as ReactText[]);
 
     return (
-        <DataProvider entityType={ENTITY_TYPES.TABLE_DATA}>
+        <DataProvider entityType={ENTITY_TYPES.USER_DATA}>
             {({ entityData: { data: tableData, status: tableStatus }, dependenciesData }) => {
                 const {
                     entityData: { data: configData /* status: configStatus */ },

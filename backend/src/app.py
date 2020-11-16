@@ -21,6 +21,15 @@ def create_app(env_name):
     db.init_app(app)
     db_load_mock_data(app, db)
 
+    # cors_config = {
+    #     'ORIGINS': [
+    #         'http://localhost:3000',  # localy deployed frontend
+    #     ],
+    # }
+
+    # CORS(app, resources={
+    #      r'/*': {'origins': cors_config['ORIGINS']}})
+
     CORS(app)
 
     app.register_blueprint(user_blueprint, url_prefix='/user-data')

@@ -1,8 +1,8 @@
 import { ENTITY_TYPES } from 'common/consts';
-import { TableDataModel } from './table-data';
-import { TableConfigModel } from './table-config';
+import { UserDataModel } from './user-data';
+import { UserConfigModel } from './user-config';
 
 export const MODELS = {
-    [ENTITY_TYPES.TABLE_DATA]: TableDataModel,
-    [ENTITY_TYPES.TABLE_CONFIG]: TableConfigModel,
+    [ENTITY_TYPES.USER_DATA]: UserDataModel,
+    [ENTITY_TYPES.USER_CONFIG]: UserConfigModel,
 };

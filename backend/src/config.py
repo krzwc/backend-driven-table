@@ -13,7 +13,6 @@ class Development(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
-    # SQLALCHEMY_DATABASE_URI = "postgresql://admin:secret@0.0.0.0:5432/users"
     SQLALCHEMY_ECHO = True
 
 

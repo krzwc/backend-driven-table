@@ -17,13 +17,13 @@ type CustomRequestMethodProps = Pick<BaseModelProps, 'url' | 'headers'>;
 
 const http = HttpService.getInstance();
 
-export const TableDataModel: Model = {
-    url: HttpService.toURL([BASE_URL, URLS.TABLE_DATA]),
-    dependencies: [{ entityType: ENTITY_TYPES.TABLE_CONFIG }],
+export const UserDataModel: Model = {
+    url: HttpService.toURL([BASE_URL, URLS.USER_DATA]),
+    dependencies: [{ entityType: ENTITY_TYPES.USER_CONFIG }],
     transformResponseBody,
     actions: {
         [ENTITY_ACTION_TYPES.DELETE]: {
-            url: HttpService.toURL([BASE_URL, URLS.TABLE_DATA]),
+            url: HttpService.toURL([BASE_URL, URLS.USER_DATA]),
             customRequestMethod: (
                 { url, headers }: CustomRequestMethodProps,
                 data: EntitiesPayloadData,

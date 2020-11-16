@@ -7,10 +7,10 @@ const http = HttpService.getInstance();
 
 type CustomRequestMethodProps = Pick<BaseModelProps, 'url' | 'headers'>;
 
-export const TableConfigModel: Model = {
+export const UserConfigModel: Model = {
     actions: {
         [ENTITY_ACTION_TYPES.READ]: {
-            url: HttpService.toURL([BASE_URL, URLS.TABLE_CONFIG]),
+            url: HttpService.toURL([BASE_URL, URLS.USER_CONFIG]),
             customRequestMethod: (
                 { url, headers }: CustomRequestMethodProps,
                 data: EntitiesPayloadData,
@@ -19,7 +19,7 @@ export const TableConfigModel: Model = {
             },
         },
         [ENTITY_ACTION_TYPES.UPDATE]: {
-            url: HttpService.toURL([BASE_URL, URLS.TABLE_CONFIG]),
+            url: HttpService.toURL([BASE_URL, URLS.USER_CONFIG]),
             customRequestMethod: (
                 { url, headers }: CustomRequestMethodProps,
                 data: EntitiesPayloadData,

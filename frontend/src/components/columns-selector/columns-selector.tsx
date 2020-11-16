@@ -42,7 +42,7 @@ const content = ({
 
     const handleClick = () => {
         setVisibleColumns(checkboxGroupState);
-        updateEntityAction({ entityType: ENTITY_TYPES.TABLE_CONFIG, entityData: { data: checkboxGroupState } });
+        updateEntityAction({ entityType: ENTITY_TYPES.USER_CONFIG, entityData: { data: checkboxGroupState } });
     };
 
     return (

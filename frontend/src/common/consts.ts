@@ -18,8 +18,8 @@ export enum ENTITY_ACTIONS {
 }
 
 export enum ENTITY_TYPES {
-    TABLE_DATA = 'table-data',
-    TABLE_CONFIG = 'table-config',
+    USER_DATA = 'user-data',
+    USER_CONFIG = 'user-config',
 }
 
 export const URL_SEPARATOR = '/';
@@ -34,8 +34,8 @@ export enum REQUEST_METHODS {
 export const BASE_URL = 'http://0.0.0.0:5000';
 
 export const URLS = {
-    TABLE_DATA: 'table-data',
-    TABLE_CONFIG: 'table-config',
+    USER_DATA: 'user-data',
+    USER_CONFIG: 'user-config',
     SINGLE_ITEM: (data: EntitiesPayloadData): string => String(data.id),
 };
 
