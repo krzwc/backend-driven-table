@@ -38,6 +38,8 @@ export class HttpService {
     public enhanceHeaders = (headers: Headers = {}): Headers => {
         return {
             'content-type': 'application/json',
+            credentials: 'include',
+            crossorigin: 'true',
             ...headers,
         };
     };
@@ -50,7 +52,7 @@ export class HttpService {
             headers,
             method,
             body,
-            credentials: 'same-origin',
+            /* credentials: 'same-origin', */
         })
             .then((response) => {
                 const { /* status, */ ok } = response;

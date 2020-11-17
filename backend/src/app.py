@@ -1,5 +1,5 @@
 from flask import Flask, request
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 import json
 
 from .config import app_config
@@ -20,15 +20,6 @@ def create_app(env_name):
 
     db.init_app(app)
     db_load_mock_data(app, db)
-
-    # cors_config = {
-    #     'ORIGINS': [
-    #         'http://localhost:3000',  # localy deployed frontend
-    #     ],
-    # }
-
-    # CORS(app, resources={
-    #      r'/*': {'origins': cors_config['ORIGINS']}})
 
     CORS(app)
 

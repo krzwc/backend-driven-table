@@ -1,4 +1,5 @@
 from flask import request, json, Response, Blueprint
+from flask_cors import CORS
 from ..models.config_model import ConfigModel, ConfigSchema
 from marshmallow import ValidationError
 # from ..shared.authentication import Auth
@@ -6,8 +7,10 @@ from marshmallow import ValidationError
 config_api = Blueprint('config_api', __name__)
 config_schema = ConfigSchema()
 
+CORS(config_api)
 
-@config_api.route('/', methods=['POST'])
+
+@config_api.route('/', methods=['PUT'])
 def update():
     """
     Update Config Function
@@ -29,6 +32,21 @@ def update():
 
     res_data = config_schema.dump(table_data)
     return custom_response({'data': res_data}, 201)
+
+
+@config_api.route('/', methods=['POST'])
+def read():
+    """
+    Read Config Function
+    """
+    req_data = request.get_json()
+
+    table_data = ConfigModel.get_config_by_table(req_data['table'])
+    if not table_data:
+        return custom_response({'error': 'table name not found'}, 404)
+
+    res_data = config_schema.dump(table_data)
+    return custom_response({'data': res_data}, 200)
 
 
 def custom_response(res, status_code):

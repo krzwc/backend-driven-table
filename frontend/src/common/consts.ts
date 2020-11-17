@@ -34,8 +34,8 @@ export enum REQUEST_METHODS {
 export const BASE_URL = 'http://0.0.0.0:5000';
 
 export const URLS = {
-    USER_DATA: 'user-data',
-    USER_CONFIG: 'user-config',
+    USER_DATA: 'user-data/',
+    USER_CONFIG: 'user-config/',
     SINGLE_ITEM: (data: EntitiesPayloadData): string => String(data.id),
 };
 

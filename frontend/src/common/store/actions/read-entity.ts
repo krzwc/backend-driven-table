@@ -38,6 +38,7 @@ export const readEntity = ({
         replaceMode,
         customRequestMethod,
         transformResponseBody,
+        /* transformRequestBody, */
         /* notifications: { success, fail } */
     } = actionSettings;
 
@@ -46,9 +47,10 @@ export const readEntity = ({
     if (dependencies && dependencies.length) {
         readDependencies(dependencies, state, dispatch);
     }
-
     const method = customRequestMethod
-        ? customRequestMethod(actionSettings, entityData, state)
+        ? /* ? transformRequestBody
+            ? customRequestMethod(transformRequestBody(actionSettings, entityData, state)) */
+          customRequestMethod(actionSettings, entityData, state)
         : http.get(url, headers);
 
     return method

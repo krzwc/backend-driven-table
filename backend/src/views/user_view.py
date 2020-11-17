@@ -1,10 +1,13 @@
 from flask import request, json, Response, Blueprint
+from flask_cors import CORS
 from ..models.user_model import UserModel, UserSchema
 from marshmallow import ValidationError
 # from ..shared.authentication import Auth
 
 user_api = Blueprint('user_api', __name__)
 user_schema = UserSchema()
+
+CORS(user_api)
 
 
 @user_api.route('/', methods=['POST'])
@@ -13,7 +16,6 @@ def create():
     Create User Function
     """
     req_data = request.get_json()
-    # data, error = user_schema.load(req_data)
     try:
         data = user_schema.load(req_data)
     except ValidationError as err:
