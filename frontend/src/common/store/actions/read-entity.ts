@@ -48,9 +48,7 @@ export const readEntity = ({
         readDependencies(dependencies, state, dispatch);
     }
     const method = customRequestMethod
-        ? /* ? transformRequestBody
-            ? customRequestMethod(transformRequestBody(actionSettings, entityData, state)) */
-          customRequestMethod(actionSettings, entityData, state)
+        ? customRequestMethod(actionSettings, entityData, state)
         : http.get(url, headers);
 
     return method

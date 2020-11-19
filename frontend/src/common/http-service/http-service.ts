@@ -15,7 +15,16 @@ export class HttpService {
 
     public static toURL(url: string | string[] | URL): URL {
         if (Array.isArray(url)) {
-            return new URL(url.join(URL_SEPARATOR), window.location.origin);
+            return new URL(
+                url
+                    .map((itemToJoin, index) =>
+                        index !== url.length - 1 && itemToJoin[itemToJoin.length - 1] === '/'
+                            ? itemToJoin.slice(0, -1)
+                            : itemToJoin,
+                    )
+                    .join(URL_SEPARATOR),
+                window.location.origin,
+            );
         }
         if (!(url instanceof URL)) {
             return new URL(url, window.location.origin);
