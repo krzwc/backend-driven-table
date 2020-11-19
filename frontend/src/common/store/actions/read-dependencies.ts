@@ -14,13 +14,18 @@ export const readDependencies = (
     const dependenciesSettings = dependencies.map(({ entityType }) => {
         const actionSettings = getActionSettings({ entityType, actionType: ENTITY_ACTION_TYPES.READ }, state);
 
-        const { url, customRequestMethod, headers } = actionSettings;
+        const { url, customRequestMethod, transformRequestBody, headers } = actionSettings;
 
         return {
             entityType,
             actionSettings,
             requestPromise: customRequestMethod
-                ? customRequestMethod({ ...actionSettings, initiateByDependency: true }, state)
+                ? transformRequestBody
+                    ? customRequestMethod(
+                          { ...actionSettings, initiateByDependency: true },
+                          transformRequestBody({ ...actionSettings, initiateByDependency: true }, {}, state),
+                      )
+                    : customRequestMethod({ ...actionSettings, initiateByDependency: true }, state)
                 : http.get(url, headers),
         };
     });

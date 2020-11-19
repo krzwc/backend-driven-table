@@ -2,6 +2,7 @@ import { Model, BaseModelProps, EntityResponse } from 'common/interfaces';
 import { HttpService } from 'common/http-service';
 import { BASE_URL, URLS, ENTITY_ACTION_TYPES } from 'common/consts';
 import { EntitiesPayloadData } from 'common/store/interfaces';
+import { ObjectType } from 'common/interfaces';
 
 const http = HttpService.getInstance();
 
@@ -11,16 +12,16 @@ export const UserConfigModel: Model = {
     actions: {
         [ENTITY_ACTION_TYPES.READ]: {
             url: HttpService.toURL([BASE_URL, URLS.USER_CONFIG]),
-            /* transformRequestBody: (): ObjectType => {
+            transformRequestBody: (): ObjectType => {
                 return {
                     table: 'users',
                 };
-            }, */
+            },
             customRequestMethod: (
                 { url, headers }: CustomRequestMethodProps,
-                _data: EntitiesPayloadData,
+                data: EntitiesPayloadData,
             ): Promise<EntityResponse> => {
-                return http.post(url, headers, JSON.stringify({ table: 'users' }));
+                return http.post(url, headers, JSON.stringify(data));
             },
         },
         [ENTITY_ACTION_TYPES.UPDATE]: {

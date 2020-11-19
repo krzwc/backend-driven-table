@@ -54,9 +54,6 @@ export const Table: FunctionComponent = () => {
                     return <Loader />;
                 }
 
-                console.log(tableData);
-                console.log(configData);
-
                 return isNotEmpty(tableData) && isNotEmpty(configData) ? (
                     <div className="table-container">
                         <div className="table-header-actions">
