@@ -22,11 +22,11 @@ def update():
         print(err.messages)
         print(err.valid_data)
 
-    config = ConfigModel(data)
-    config.save()
+    config = ConfigModel.get_config_by_table(data['table'])
+    config.update(data)
 
     # get and return the updated data from db
-    table_data = ConfigModel.get_config_by_table(req_data['table'])
+    table_data = ConfigModel.get_config_by_table(data['table'])
     if not table_data:
         return custom_response({'error': 'table name not found'}, 404)
 
@@ -35,15 +35,22 @@ def update():
 
 
 @config_api.route('/', methods=['POST'])
-def read():
+def read_or_create():
     """
-    Read Config Function
+    Read or Create Config Function
     """
     req_data = request.get_json()
+    try:
+        data = config_schema.load(req_data)
+    except ValidationError as err:
+        print(err.messages)
+        print(err.valid_data)
 
     table_data = ConfigModel.get_config_by_table(req_data['table'])
     if not table_data:
-        return custom_response({'error': 'table name not found'}, 404)
+        config = ConfigModel(data)
+        config.save()
+        table_data = ConfigModel.get_config_by_table(data['table'])
 
     res_data = config_schema.dump(table_data)
     return custom_response({'data': res_data}, 200)

@@ -101,7 +101,7 @@ def delete_a_user(user_id):
     """
     user = UserModel.get_one_user(user_id)
     user.delete()
-    return custom_response({'data': user_id}, 201)
+    return custom_response({'data': {"id": user_id}}, 201)
 
 
 # @user_api.route('/me', methods=['GET'])

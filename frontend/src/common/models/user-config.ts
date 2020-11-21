@@ -14,8 +14,21 @@ export const UserConfigModel: Model = {
             url: HttpService.toURL([BASE_URL, URLS.USER_CONFIG]),
             transformRequestBody: (): ObjectType => {
                 return {
-                    table: 'users',
+                    table: 'users', // TODO: hide BE implementation details
                 };
+            },
+            transformResponseBody: (response: any) => {
+                const parsedResponse = {
+                    ...response,
+                    data: {
+                        ...response.data,
+                        columns: response.data.columns
+                            .slice(2, -2)
+                            .replace(/['"]+/g, '')
+                            .split(','),
+                    },
+                };
+                return parsedResponse;
             },
             customRequestMethod: (
                 { url, headers }: CustomRequestMethodProps,
@@ -26,11 +39,30 @@ export const UserConfigModel: Model = {
         },
         [ENTITY_ACTION_TYPES.UPDATE]: {
             url: HttpService.toURL([BASE_URL, URLS.USER_CONFIG]),
+            transformRequestBody: (_body: ObjectType, entityData: { data: string[] }): ObjectType => {
+                return {
+                    table: 'users',
+                    columns: `[${entityData.data.map((column: string) => `'${column}'`)}]`,
+                }; // TODO: hide BE implementation details
+            },
+            transformResponseBody: (response: any) => {
+                const parsedResponse = {
+                    ...response,
+                    data: {
+                        ...response.data,
+                        columns: response.data.columns
+                            .slice(1, -1)
+                            .replace(/['"]+/g, '')
+                            .split(','),
+                    },
+                };
+                return parsedResponse;
+            },
             customRequestMethod: (
                 { url, headers }: CustomRequestMethodProps,
                 data: EntitiesPayloadData,
             ): Promise<EntityResponse> => {
-                return http.put(url, headers, JSON.stringify(data));
+                return http.put(url, headers, data.body);
             },
             replaceMode: true,
         },

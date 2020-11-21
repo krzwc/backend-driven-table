@@ -62,13 +62,13 @@ export const updateEntity = ({
 
     dispatch(entityRequestStart(entityType));
 
-    const body = JSON.stringify(transformRequestBody);
+    const body = JSON.stringify(transformedRequestBody);
 
     const method = customRequestMethod
         ? customRequestMethod(
               actionSettings,
               {
-                  ...entityData,
+                  /* ...entityData, */ // TODO: uncomment when ready
                   body,
               },
               state,
