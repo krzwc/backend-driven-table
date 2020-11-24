@@ -16,6 +16,7 @@ class UserModel(db.Model):
     email = db.Column(db.String(128), unique=True, nullable=False)
     gender = db.Column(db.String(128), nullable=True)
     ip_address = db.Column(db.String(128), nullable=True)
+    password = db.Column(db.String(128), nullable=False)
 
     # class constructor
     def __init__(self, data):
@@ -27,6 +28,7 @@ class UserModel(db.Model):
         self.email = data.get('email')
         self.gender = data.get('gender')
         self.ip_address = data.get('ip_address')
+        self.password = data.get('password')
 
     def save(self):
         db.session.add(self)
@@ -67,3 +69,4 @@ class UserSchema(Schema):
     email = fields.Email(required=True)
     gender = fields.Str(required=True)
     ip_address = fields.Str(required=True)
+    password = fields.Str(required=True, load_only=True)

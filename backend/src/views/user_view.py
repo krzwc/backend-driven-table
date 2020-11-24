@@ -2,7 +2,7 @@ from flask import request, json, Response, Blueprint
 from flask_cors import CORS
 from ..models.user_model import UserModel, UserSchema
 from marshmallow import ValidationError
-# from ..shared.authentication import Auth
+from ..shared.Authentication import Auth
 
 user_api = Blueprint('user_api', __name__)
 user_schema = UserSchema()
@@ -32,9 +32,8 @@ def create():
     user = UserModel(data)
     user.save()
     ser_data = user_schema.dump(user)
-    return custom_response({'data': "OK"}, 201)
-    # token = Auth.generate_token(ser_data.get('id'))
-    # return custom_response({'jwt_token': token}, 201)
+    token = Auth.generate_token(ser_data.get('id'))
+    return custom_response({'data': "OK", 'jwt_token': token}, 201)
 
 
 @user_api.route('/', methods=['GET'])
