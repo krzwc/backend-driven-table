@@ -11,7 +11,7 @@ import { Login } from './login';
 export const Main: FunctionComponent = () => {
     return (
         <div className="container">
-            <Login authStatus={REQUEST_STATUSES.SUCCESS} authenticate={noop} />
+            {/* <Login authStatus={REQUEST_STATUSES.SUCCESS} authenticate={noop} /> */}
             <Table />
         </div>
     );

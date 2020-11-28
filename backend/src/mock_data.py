@@ -1,8 +1,14 @@
 from .models.user_model import UserModel
+from .models.config_model import ConfigModel
 
 
 def db_load_mock_data(app, db):
     with app.app_context():
+        configs = ConfigModel.get_all_tables_config()
+        if not configs:
+            db.session.add(ConfigModel({"table": "users", "columns": "['first_name', 'last_name', 'email']"}))
+            db.session.commit()
+        
         users = UserModel.get_all_users()
         if not users:
             db.session.add(UserModel({"first_name": 'Ingunna', "last_name": 'Fielders',

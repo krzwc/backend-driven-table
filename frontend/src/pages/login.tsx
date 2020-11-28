@@ -65,7 +65,7 @@ export class Login extends PureComponent<LoginOwnProps> {
         );
     };
 
-    private onFinish = (values) => {
+    private onFinish = (values: any): void => {
         const { authenticate } = this.props;
 
         authenticate(values);

@@ -56,6 +56,16 @@ def read_or_create():
     return custom_response({'data': res_data}, 200)
 
 
+@config_api.route('/', methods=['GET'])
+def get_all():
+    """
+    Read all configs
+    """
+    configs = ConfigModel.get_all_tables_config()
+    ser_configs = config_schema.dump(configs, many=True)
+    return custom_response({'data': ser_configs}, 200)
+
+
 def custom_response(res, status_code):
     """
     Custom Response Function
