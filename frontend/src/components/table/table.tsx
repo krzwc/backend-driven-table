@@ -58,7 +58,6 @@ export const Table: FunctionComponent = () => {
                     <div className="table-container">
                         <div className="table-header-actions">
                             <DeleteButton selectedRowKeys={selectedRowKeys} isLoading={isLoading} />
-                            {console.log(configData)}
                             <ColumnsSelector
                                 visibleColumns={visibleColumns}
                                 configData={Array.isArray(configData) ? configData[0].columns : configData.columns} // TODO: WTF?

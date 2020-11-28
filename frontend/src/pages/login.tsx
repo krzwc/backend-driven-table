@@ -11,10 +11,6 @@ interface LoginOwnProps {
 }
 
 export class Login extends PureComponent<LoginOwnProps> {
-    public state = {
-        helpVisible: false,
-    };
-
     private formRef: React.RefObject<FormInstance> = React.createRef();
 
     private get isLoggingIn() {
@@ -35,7 +31,7 @@ export class Login extends PureComponent<LoginOwnProps> {
             hasFeedback: true,
         };
 
-        const usernameInputRules: Rule[] = [{ required: true, message: 'Please enter your username' }];
+        const emailInputRules: Rule[] = [{ required: true, message: 'Please enter your email' }];
 
         const passwordInputRules: Rule[] = [{ required: true, message: 'Please enter your password' }];
 
@@ -53,8 +49,8 @@ export class Login extends PureComponent<LoginOwnProps> {
                     hideRequiredMark={true}
                     autoComplete="off"
                 >
-                    <Form.Item name="username" rules={usernameInputRules} {...itemProps}>
-                        {this.renderUsernameField()}
+                    <Form.Item name="email" rules={emailInputRules} {...itemProps}>
+                        {this.renderEmailField()}
                     </Form.Item>
                     <Form.Item name="password" rules={passwordInputRules} {...itemProps}>
                         {this.renderPasswordField()}
@@ -71,7 +67,7 @@ export class Login extends PureComponent<LoginOwnProps> {
         authenticate(values);
     };
 
-    private renderUsernameField = () => <Input placeholder="Username" disabled={this.isLoggingIn} autoComplete="off" />;
+    private renderEmailField = () => <Input placeholder="Email" disabled={this.isLoggingIn} autoComplete="off" />;
 
     private renderPasswordField = () => (
         <Input.Password placeholder="Password" disabled={this.isLoggingIn} autoComplete="off" />

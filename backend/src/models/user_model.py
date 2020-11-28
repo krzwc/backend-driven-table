@@ -1,5 +1,6 @@
 from marshmallow import fields, Schema
 from . import db
+# from . import db, bcrypt
 
 
 class UserModel(db.Model):
@@ -54,6 +55,9 @@ class UserModel(db.Model):
     @staticmethod
     def get_user_by_email(value):
         return UserModel.query.filter_by(email=value).first()
+
+    # def check_hash(self, password):
+    #     return bcrypt.check_password_hash(self.password, password)
 
     def __repr(self):
         return '<id {}>'.format(self.id)
