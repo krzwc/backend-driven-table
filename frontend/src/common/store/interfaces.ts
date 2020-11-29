@@ -3,10 +3,13 @@ import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { ImmutableMap } from 'common/interfaces';
 import { ENTITY_TYPES, ENTITY_ACTIONS } from 'common/consts';
 
+import { AuthState } from './actions/auth/interfaces';
+
 export type StoreState = ImmutableMap<{
     entities: {
         [key: string]: any;
     };
+    auth: AuthState;
 }>;
 
 export interface EntitiesPayloadData {

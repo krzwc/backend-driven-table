@@ -36,7 +36,7 @@ export const BASE_URL = 'http://0.0.0.0:5000';
 export const URLS = {
     USER_DATA: 'user-data/',
     USER_CONFIG: 'user-config/',
-    LOGIN: 'login/',
+    LOGIN: 'login',
     SINGLE_ITEM: (data: EntitiesPayloadData): string => String(data.id),
 };
 

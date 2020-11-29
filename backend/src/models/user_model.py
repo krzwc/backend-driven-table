@@ -68,9 +68,9 @@ class UserSchema(Schema):
     User Schema
     """
     id = fields.Int(dump_only=True)
-    first_name = fields.Str(required=True)
-    last_name = fields.Str(required=True)
+    first_name = fields.Str()
+    last_name = fields.Str()
     email = fields.Email(required=True)
-    gender = fields.Str(required=True)
-    ip_address = fields.Str(required=True)
+    gender = fields.Str()
+    ip_address = fields.Str()
     password = fields.Str(required=True, load_only=True)

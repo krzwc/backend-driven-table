@@ -6,7 +6,7 @@ import { REQUEST_STATUSES } from 'common/consts';
 import { Loader } from 'components/loader/loader';
 
 interface LoginOwnProps {
-    authStatus: REQUEST_STATUSES;
+    authStatus: REQUEST_STATUSES | undefined;
     authenticate(body: BodyInit): void;
 }
 
