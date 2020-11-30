@@ -6,9 +6,10 @@ def db_load_mock_data(app, db):
     with app.app_context():
         configs = ConfigModel.get_all_tables_config()
         if not configs:
-            db.session.add(ConfigModel({"table": "users", "columns": "['first_name', 'last_name', 'email']"}))
+            db.session.add(ConfigModel(
+                {"table": "users", "columns": "['first_name', 'last_name', 'email']"}))
             db.session.commit()
-        
+
         users = UserModel.get_all_users()
         if not users:
             db.session.add(UserModel({"first_name": 'Ingunna', "last_name": 'Fielders',
@@ -1357,7 +1358,8 @@ def db_load_mock_data(app, db):
                                       "email": 'jowenin@ucla.edu', "gender": 'Female', "ip_address": '82.19.2.145', "password": 'dupa'}))
             db.session.add(UserModel({"first_name": 'Addy', "last_name": 'Strood',
                                       "email": 'astroodio@un.org', "gender": 'Female', "ip_address": '101.8.174.228', "password": 'dupa'}))
-            db.session.add(UserModel({"first_name": 'Gallagher', "last_name": 'Du Pre', "email": 'gdupreip@amazon.com', "gender": 'Male', "ip_address": '78.4.201.101', "password": 'dupa'}))
+            db.session.add(UserModel({"first_name": 'Gallagher', "last_name": 'Du Pre',
+                                      "email": 'gdupreip@amazon.com', "gender": 'Male', "ip_address": '78.4.201.101', "password": 'dupa'}))
             db.session.add(UserModel({"first_name": 'Adorne', "last_name": 'Collihole',
                                       "email": 'acolliholeiq@bing.com', "gender": 'Female', "ip_address": '84.22.84.53', "password": 'dupa'}))
             db.session.add(UserModel({"first_name": 'Agnesse', "last_name": 'Ville',
@@ -1946,7 +1948,8 @@ def db_load_mock_data(app, db):
                                       "email": 'kmabbotqu@gnu.org', "gender": 'Male', "ip_address": '172.219.26.6', "password": 'dupa'}))
             db.session.add(UserModel({"first_name": 'Kaylee', "last_name": 'Raise',
                                       "email": 'kraiseqv@omniture.com', "gender": 'Female', "ip_address": '118.129.248.209', "password": 'dupa'}))
-            db.session.add(UserModel({"first_name": 'Clemmie', "last_name": 'ORudden', "email": 'coruddenqw@yandex.ru', "gender": 'Female', "ip_address": '216.216.132.148', "password": 'dupa'}))
+            db.session.add(UserModel({"first_name": 'Clemmie', "last_name": 'ORudden', "email": 'coruddenqw@yandex.ru',
+                                      "gender": 'Female', "ip_address": '216.216.132.148', "password": 'dupa'}))
             db.session.add(UserModel({"first_name": 'Nessy', "last_name": 'Leagas',
                                       "email": 'nleagasqx@yellowbook.com', "gender": 'Female', "ip_address": '241.134.181.89', "password": 'dupa'}))
             db.session.add(UserModel({"first_name": 'Guthry', "last_name": 'Ogdahl',

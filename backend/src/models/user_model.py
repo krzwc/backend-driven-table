@@ -1,6 +1,5 @@
 from marshmallow import fields, Schema
-from . import db
-# from . import db, bcrypt
+from . import db, bcrypt
 
 
 class UserModel(db.Model):
@@ -29,7 +28,8 @@ class UserModel(db.Model):
         self.email = data.get('email')
         self.gender = data.get('gender')
         self.ip_address = data.get('ip_address')
-        self.password = data.get('password')
+        self.password = UserModel.generate_hash(
+            data.get('password'))
 
     def save(self):
         db.session.add(self)
@@ -45,6 +45,10 @@ class UserModel(db.Model):
         db.session.commit()
 
     @staticmethod
+    def generate_hash(password):
+        return bcrypt.generate_password_hash(password.encode('utf8')).decode('utf8')
+
+    @staticmethod
     def get_all_users():
         return UserModel.query.all()
 
@@ -56,8 +60,8 @@ class UserModel(db.Model):
     def get_user_by_email(value):
         return UserModel.query.filter_by(email=value).first()
 
-    # def check_hash(self, password):
-    #     return bcrypt.check_password_hash(self.password, password)
+    def check_hash(self, password):
+        return bcrypt.check_password_hash(self.password, password)
 
     def __repr(self):
         return '<id {}>'.format(self.id)

@@ -134,8 +134,9 @@ def login():
     user = UserModel.get_user_by_email(req_data['email'])
     if not user:
         return custom_response({'error': 'invalid credentials'}, 400)
-    # if not user.check_hash(data.get('password')):
-        # return custom_response({'error': 'invalid credentials'}, 400)
+    print(UserModel.generate_hash(data.get('password')))
+    if not user.check_hash(data.get('password')):
+        return custom_response({'error': 'invalid credentials'}, 400)
     ser_data = user_schema.dump(user)
     token = Auth.generate_token(ser_data.get('id'))
     return custom_response({'jwt_token': token}, 200)
