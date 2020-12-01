@@ -30,8 +30,11 @@ const mapDispatchToProps: DispatchToProps = {
 export const Main: FunctionComponent<StateToProps & DispatchToProps> = ({ authStatus, login }) => {
     return (
         <div className="container">
-            <Login authStatus={authStatus} authenticate={login} />
-            <Table />
+            {authStatus === REQUEST_STATUSES.SUCCESS ? (
+                <Table />
+            ) : (
+                <Login authStatus={authStatus} authenticate={login} />
+            )}
         </div>
     );
 };
