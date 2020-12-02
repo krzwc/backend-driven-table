@@ -18,6 +18,10 @@ export interface EntityResponse {
   search?: any; */
 }
 
+export interface LoginResponse {
+    jwt_token: string;
+}
+
 export interface BaseModelProps {
     url: string | URL;
     headers?: Headers;

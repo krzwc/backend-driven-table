@@ -1,6 +1,6 @@
 import { URL_SEPARATOR, REQUEST_METHODS } from 'common/consts';
 import { Headers, RequestParameters } from './interfaces';
-import { EntityResponse } from 'common/interfaces';
+import { EntityResponse, LoginResponse } from 'common/interfaces';
 
 export class HttpService {
     private static instance: HttpService;
@@ -35,7 +35,7 @@ export class HttpService {
 
     public get = (url: string | URL, headers: Headers = {}): Promise<EntityResponse> => this.request({ url, headers });
 
-    public post = (url: string | URL, headers: Headers = {}, body: BodyInit): Promise<EntityResponse> =>
+    public post = (url: string | URL, headers: Headers = {}, body: BodyInit): Promise<EntityResponse | LoginResponse> =>
         this.request({ url, headers, body, method: REQUEST_METHODS.POST });
 
     public put = (url: string | URL, headers: Headers = {}, body: BodyInit): Promise<EntityResponse> =>

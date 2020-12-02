@@ -1,7 +1,7 @@
 import { URLS, BASE_URL } from 'common/consts';
 import { CommonThunkAction } from 'common/store/interfaces';
 import { HttpService } from 'common/http-service';
-import { EntityResponse } from 'common/interfaces';
+import { LoginResponse } from 'common/interfaces';
 
 import { showErrorNotification } from '../helpers';
 import { AUTHENTICATION_ACTIONS } from './consts';
@@ -16,7 +16,7 @@ const authenticationFailure = () => ({
     type: AUTHENTICATION_ACTIONS.LOGIN_FAILURE as AUTHENTICATION_ACTIONS.LOGIN_FAILURE,
 });
 
-const login = (body: BodyInit): CommonThunkAction<void | EntityResponse> => (dispatch) => {
+const login = (body: BodyInit): CommonThunkAction<void | LoginResponse> => (dispatch) => {
     dispatch(authenticationStart());
 
     return http
@@ -26,7 +26,7 @@ const login = (body: BodyInit): CommonThunkAction<void | EntityResponse> => (dis
             JSON.stringify(body),
         )
         .then((response) => {
-            dispatch({ type: AUTHENTICATION_ACTIONS.LOGIN_SUCCESS });
+            dispatch({ type: AUTHENTICATION_ACTIONS.LOGIN_SUCCESS, payload: (response as LoginResponse).jwt_token });
 
             return response;
         })
@@ -35,7 +35,7 @@ const login = (body: BodyInit): CommonThunkAction<void | EntityResponse> => (dis
             dispatch(authenticationFailure());
 
             return Promise.reject(error);
-        });
+        }) as Promise<LoginResponse>;
 };
 
 export { login };

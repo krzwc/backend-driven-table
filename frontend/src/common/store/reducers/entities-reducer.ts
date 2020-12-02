@@ -1,11 +1,16 @@
 import { fromJS, List, Map } from 'immutable';
+import { Reducer } from 'redux';
+
 import { EntitiesAction, EntitiesPayload } from 'common/store/interfaces';
 import { ENTITY_ACTIONS, REQUEST_STATUSES } from 'common/consts';
+
 import { basicStoreKeys, updateSingleEntity, mutateState } from './helpers';
 
 const initialState = Map();
 
-export const entitiesReducer = (state = initialState, action: EntitiesAction): Map<unknown, unknown> => {
+export type EntitiesReducer = Reducer<Map<unknown, unknown>, EntitiesAction>;
+
+export const entitiesReducer: EntitiesReducer = (state = initialState, action: EntitiesAction) => {
     const { type, payload } = action;
     const { data = {}, entityType, replaceMode } = payload || ({} as EntitiesPayload);
 

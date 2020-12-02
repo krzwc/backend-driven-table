@@ -1,11 +1,10 @@
 import { ReducersMapObject } from 'redux';
 import { combineReducers } from 'redux-immutable';
-import { StoreState, EntitiesAction } from 'common/store/interfaces';
-import { AuthenticationAction } from 'common/store/actions/auth/interfaces';
+import { StoreState } from 'common/store/interfaces';
 import { entitiesReducer } from './entities-reducer';
 import { authReducer } from './auth-reducer';
 
-const reducers: ReducersMapObject<any, EntitiesAction & AuthenticationAction> = {
+const reducers: ReducersMapObject<any, any> = {
     entities: entitiesReducer,
     auth: authReducer,
 };

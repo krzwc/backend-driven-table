@@ -11,6 +11,7 @@ CORS(user_api)
 
 
 @user_api.route('/', methods=['POST'])
+@Auth.auth_required
 def create():
     """
     Create User Function
@@ -37,7 +38,7 @@ def create():
 
 
 @user_api.route('/', methods=['GET'])
-# @Auth.auth_required
+@Auth.auth_required
 def get_all():
     """
     Get all users
@@ -48,7 +49,7 @@ def get_all():
 
 
 @user_api.route('/<int:user_id>', methods=['GET'])
-# @Auth.auth_required
+@Auth.auth_required
 def get_a_user(user_id):
     """
     Get a single user

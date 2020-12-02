@@ -34,7 +34,7 @@ export const UserConfigModel: Model = {
                 { url, headers }: CustomRequestMethodProps,
                 data: EntitiesPayloadData,
             ): Promise<EntityResponse> => {
-                return http.post(url, headers, JSON.stringify(data));
+                return http.post(url, headers, JSON.stringify(data)) as Promise<EntityResponse>;
             },
         },
         [ENTITY_ACTION_TYPES.UPDATE]: {
