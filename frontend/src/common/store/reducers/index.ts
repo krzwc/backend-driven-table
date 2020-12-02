@@ -1,12 +1,8 @@
-import { ReducersMapObject } from 'redux';
 import { combineReducers } from 'redux-immutable';
-import { StoreState } from 'common/store/interfaces';
 import { entitiesReducer } from './entities-reducer';
 import { authReducer } from './auth-reducer';
 
-const reducers: ReducersMapObject<any, any> = {
+export const rootReducer = combineReducers({
     entities: entitiesReducer,
     auth: authReducer,
-};
-
-export const rootReducer = combineReducers<StoreState>(reducers);
+});

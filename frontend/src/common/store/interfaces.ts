@@ -6,9 +6,7 @@ import { ENTITY_TYPES, ENTITY_ACTIONS } from 'common/consts';
 import { AuthState } from './actions/auth/interfaces';
 
 export type StoreState = ImmutableMap<{
-    entities: {
-        [key: string]: any;
-    };
+    entities: Record<string, unknown>;
     auth: AuthState;
 }>;
 
