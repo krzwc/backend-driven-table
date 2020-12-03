@@ -2,7 +2,7 @@ from flask import request, json, Response, Blueprint
 from flask_cors import CORS
 from ..models.config_model import ConfigModel, ConfigSchema
 from marshmallow import ValidationError
-# from ..shared.authentication import Auth
+from ..shared.Authentication import Auth
 
 config_api = Blueprint('config_api', __name__)
 config_schema = ConfigSchema()
@@ -11,6 +11,7 @@ CORS(config_api)
 
 
 @config_api.route('/', methods=['PUT'])
+@Auth.auth_required
 def update():
     """
     Update Config Function
@@ -35,6 +36,7 @@ def update():
 
 
 @config_api.route('/', methods=['POST'])
+@Auth.auth_required
 def read_or_create():
     """
     Read or Create Config Function
@@ -57,6 +59,7 @@ def read_or_create():
 
 
 @config_api.route('/', methods=['GET'])
+@Auth.auth_required
 def get_all():
     """
     Read all configs

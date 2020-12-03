@@ -13,3 +13,7 @@ export const authStatusSelector: Selector<StoreState, REQUEST_STATUSES> = create
     authStateSelector,
     (authState) => authState.get('status'),
 );
+
+export const authTokenSelector: Selector<StoreState, string> = createSelector(authStateSelector, (authState) =>
+    authState.get('token'),
+);

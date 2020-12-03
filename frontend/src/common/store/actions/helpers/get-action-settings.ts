@@ -5,6 +5,7 @@ import { HttpService } from 'common/http-service';
 import { ENTITY_ACTION_TYPES, ENTITY_TYPES } from 'common/consts';
 import { get } from 'common/helpers';
 import { ObjectType } from 'common/interfaces';
+import { authTokenSelector } from 'common/store/selectors/auth-selectors.ts';
 
 const http = HttpService.getInstance();
 
@@ -18,10 +19,11 @@ type EntityActionRequestSettings = Required<BaseModelProps>;
 
 type GetRequestSettings = (data: RequestData, state: StoreState) => EntityActionRequestSettings;
 
-export const getActionSettings: GetRequestSettings = ({ entityType, actionType }, _state: StoreState) => {
+export const getActionSettings: GetRequestSettings = ({ entityType, actionType }, state: StoreState) => {
     const model = MODELS[entityType];
     const modelActions = (get(model, ['actions', actionType], {}) as ObjectType) || {};
     const actionSettings = { ...model, ...modelActions } as EntityActionRequestSettings;
+    const authToken = authTokenSelector(state);
 
     const {
         headers,
@@ -41,7 +43,7 @@ export const getActionSettings: GetRequestSettings = ({ entityType, actionType }
         transformRequestBody,
         transformResponseBody,
         url,
-        headers: http.enhanceHeaders(headers),
+        headers: http.enhanceHeaders({ ...headers, ...{ 'api-token': authToken } }),
         replaceMode,
     };
 };

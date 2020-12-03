@@ -94,7 +94,7 @@ def get_a_user(user_id):
 
 
 @user_api.route('/<int:user_id>', methods=['DELETE'])
-# @Auth.auth_required
+@Auth.auth_required
 def delete_a_user(user_id):
     """
     Delete a user
