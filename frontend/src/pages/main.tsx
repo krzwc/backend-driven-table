@@ -1,14 +1,15 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, Suspense, lazy } from 'react';
 import { connect, HandleThunkActionCreator, MapStateToProps } from 'react-redux';
 import '../styles.css';
 import 'antd/dist/antd.css';
 
-import { Table } from 'components/table/table';
+const Table = lazy(() => import('components/table/table'));
 import { REQUEST_STATUSES } from 'common/consts';
 import { login as loginAction } from 'common/store/actions/auth/actions';
 import { thunkDispatchify } from 'common/store/actions/helpers/thunkDispatchify';
 import { StoreState } from 'common/store/interfaces';
 import { authStatusSelector } from 'common/store/selectors/auth-selectors';
+import { Loader } from 'components/loader/loader';
 
 import { Login } from './login';
 
@@ -31,7 +32,9 @@ export const Main: FunctionComponent<StateToProps & DispatchToProps> = ({ authSt
     return (
         <div className="container">
             {authStatus === REQUEST_STATUSES.SUCCESS ? (
-                <Table />
+                <Suspense fallback={<Loader />}>
+                    <Table />
+                </Suspense>
             ) : (
                 <Login authStatus={authStatus} authenticate={login} />
             )}

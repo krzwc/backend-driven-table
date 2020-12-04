@@ -79,3 +79,5 @@ export const Table: FunctionComponent = () => {
         </DataProvider>
     );
 };
+
+export default Table;
