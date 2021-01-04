@@ -1,9 +1,9 @@
 import { applyMiddleware, createStore, compose } from 'redux';
-import { Map } from 'immutable';
 import thunk from 'redux-thunk';
 import { rootReducer } from './reducers';
+import { StoreState } from 'common/store/interfaces';
 
-const INITIAL_STATE = Map();
+const INITIAL_STATE = {} as StoreState;
 
 declare global {
     interface Window {

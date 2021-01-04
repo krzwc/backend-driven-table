@@ -1,5 +1,4 @@
-import { ReducersMapObject } from 'redux';
-import { combineReducers } from 'redux-immutable';
+import { combineReducers, ReducersMapObject } from 'redux';
 import { StoreState } from 'common/store/interfaces';
 import { entitiesReducer } from './entities-reducer';
 import { authReducer } from './auth-reducer';

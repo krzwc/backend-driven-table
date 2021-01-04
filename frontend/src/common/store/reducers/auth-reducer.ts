@@ -1,42 +1,32 @@
-import { Map } from 'immutable';
-import { Reducer } from 'redux';
+import produce, { Draft } from 'immer';
 
 import { AuthenticationAction } from 'common/store/actions/auth/interfaces';
 import { AUTHENTICATION_ACTIONS } from 'common/store/actions/auth/consts';
 import { isAuthenticationLoginSuccessAction } from 'common/store/actions/auth/helpers';
 import { REQUEST_STATUSES } from 'common/consts';
 
-const initialState = Map();
+export type AuthReducerState = Record<string, any>;
 
-export type AuthReducer = Reducer<Map<unknown, unknown>, AuthenticationAction>;
-
-export const authReducer: AuthReducer = (state = initialState, action: AuthenticationAction) => {
+export const authReducer = produce((draft: Draft<AuthReducerState>, action: AuthenticationAction) => {
     const { type } = action;
 
     switch (type) {
         case AUTHENTICATION_ACTIONS.LOGIN_START:
-            return state.withMutations((mutableState) => {
-                mutableState.set('status', REQUEST_STATUSES.PENDING);
-            });
+            draft['status'] = REQUEST_STATUSES.PENDING;
+            return;
 
         case AUTHENTICATION_ACTIONS.LOGIN_SUCCESS:
             if (isAuthenticationLoginSuccessAction(action)) {
                 const { payload } = action;
-                return state.withMutations((mutableState) => {
-                    mutableState.set('status', REQUEST_STATUSES.SUCCESS);
-                    mutableState.set('token', payload);
-                });
+                draft['status'] = REQUEST_STATUSES.SUCCESS;
+                draft['token'] = payload;
+                return;
             }
-            return state.withMutations((mutableState) => {
-                mutableState.set('status', REQUEST_STATUSES.FAILURE);
-            });
+            draft['status'] = REQUEST_STATUSES.FAILURE;
+            return;
 
         case AUTHENTICATION_ACTIONS.LOGIN_FAILURE:
-            return state.withMutations((mutableState) => {
-                mutableState.set('status', REQUEST_STATUSES.FAILURE);
-            });
-
-        default:
-            return state;
+            draft['status'] = REQUEST_STATUSES.FAILURE;
+            return;
     }
-};
+}, {});

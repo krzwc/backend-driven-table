@@ -63,11 +63,11 @@ const mapStateToPropsFactory: MapStateToPropsFactory<StateToProps, DataProviderP
         };
 
         return Object.assign(baseProps, {
-            entityData: allEntitiesSelector(currentState).toJS(),
+            entityData: allEntitiesSelector(currentState),
             dependenciesData: areDependantEntities
                 ? dependantEntitiesSelectors.map((selector) => ({
                       entityType: selector.entityType,
-                      entityData: selector.entitySelector(currentState).toJS(),
+                      entityData: selector.entitySelector(currentState),
                   }))
                 : [],
         });

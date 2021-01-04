@@ -46,11 +46,11 @@ type StrictUnion<T> = StrictUnionHelper<T, T>;
 
 export type Model = StrictUnion<BaseModelProps | ModelWithActions>;
 
-export interface ImmutableMap<T> extends Omit<Map<string, any>, 'get' | 'set'> {
+/* export interface ImmutableMap<T> extends Omit<Map<string, any>, 'get' | 'set'> {
     getIn<K extends keyof T>(name: K, notSetValue?: T[K]): T[K];
     setIn<K extends keyof T>(Key: K, value: T[K]): ImmutableMap<T>;
     get<K extends keyof T>(name: K, notSetValue?: T[K]): T[K];
     set<K extends keyof T>(Key: K, value: T[K]): ImmutableMap<T>;
-}
+} */
 
 export type ObjectType = Record<string, unknown>;

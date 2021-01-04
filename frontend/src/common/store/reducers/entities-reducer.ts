@@ -1,65 +1,44 @@
-import { fromJS, List, Map } from 'immutable';
-import { Reducer } from 'redux';
+import produce, { Draft } from 'immer';
 
 import { EntitiesAction, EntitiesPayload } from 'common/store/interfaces';
 import { ENTITY_ACTIONS, REQUEST_STATUSES } from 'common/consts';
 
-import { basicStoreKeys, updateSingleEntity, mutateState } from './helpers';
+import { updateSingleEntity, removeFromArray } from './helpers';
 
-const initialState = Map();
+export type EntitiesReducerState = Record<string, any>;
+const _hasOwnProperty = Object.prototype.hasOwnProperty;
 
-export type EntitiesReducer = Reducer<Map<unknown, unknown>, EntitiesAction>;
-
-export const entitiesReducer: EntitiesReducer = (state = initialState, action: EntitiesAction) => {
+export const entitiesReducer = produce((draft: Draft<EntitiesReducerState>, action: EntitiesAction) => {
     const { type, payload } = action;
     const { data = {}, entityType, replaceMode } = payload || ({} as EntitiesPayload);
 
     switch (type) {
         case ENTITY_ACTIONS.ENTITY_REQUEST_START:
-            return state.withMutations((mutableState) => {
-                mutableState.setIn([entityType, 'status'], REQUEST_STATUSES.PENDING);
-            });
-        case ENTITY_ACTIONS.UPDATE_ENTITY_SUCCESS:
-        case ENTITY_ACTIONS.READ_ENTITY_SUCCESS: {
-            let updatedEntitiesData: any;
-            if (type === ENTITY_ACTIONS.READ_ENTITY_SUCCESS) {
-                updatedEntitiesData = Array.isArray(data) ? data : [data];
+            if (_hasOwnProperty.call(draft, entityType) && _hasOwnProperty.call(draft[entityType], 'status')) {
+                draft[entityType]['status'] = REQUEST_STATUSES.PENDING;
             } else {
-                updatedEntitiesData = updateSingleEntity(state.getIn([entityType, 'data'], List()), data, replaceMode);
+                draft[entityType] = { status: REQUEST_STATUSES.PENDING };
             }
-
-            return state.withMutations((mutableState) => {
-                [...basicStoreKeys, 'status'].forEach((key) =>
-                    mutateState({ key, payload })(mutableState, {
-                        status: REQUEST_STATUSES.SUCCESS,
-                        data: updatedEntitiesData,
-                    }),
-                );
-            });
+            return;
+        case ENTITY_ACTIONS.UPDATE_ENTITY_SUCCESS:
+            draft[entityType]['status'] = REQUEST_STATUSES.SUCCESS;
+            draft[entityType]['data'] = updateSingleEntity(draft[entityType]['data'] || [], data, replaceMode);
+            return;
+        case ENTITY_ACTIONS.READ_ENTITY_SUCCESS: {
+            const entitiesData = Array.isArray(data) ? data : [data];
+            draft[entityType] = { status: REQUEST_STATUSES.SUCCESS, data: entitiesData };
+            return;
         }
         case ENTITY_ACTIONS.CREATE_ENTITY_SUCCESS:
-            return state.withMutations((mutableState) => {
-                mutableState.setIn([entityType, 'status'], REQUEST_STATUSES.SUCCESS);
-                mutableState.updateIn([entityType, 'data'], (current) => current.push(fromJS(data)));
-            });
+            draft[entityType] = { status: REQUEST_STATUSES.SUCCESS, data };
+            return;
         case ENTITY_ACTIONS.DELETE_ENTITY_SUCCESS:
-            return state.withMutations((mutableState) => {
-                mutableState.setIn([entityType, 'status'], REQUEST_STATUSES.SUCCESS);
-                mutableState.setIn(
-                    [entityType, 'data'],
-                    mutableState.getIn([entityType, 'data']).filter((instance: any) => {
-                        return instance.get('id') !== Number(data.id);
-                    }),
-                );
-            });
+            draft[entityType]['status'] = REQUEST_STATUSES.SUCCESS;
+            removeFromArray(draft[entityType]['data'], data); // ???? Perhaps removeFromArray must return spliced array
+            return;
         case ENTITY_ACTIONS.ENTITY_REQUEST_FAILURE:
-            return state.withMutations((mutableState) => {
-                mutableState.setIn([entityType, 'status'], REQUEST_STATUSES.FAILURE);
-                if (replaceMode) {
-                    //TODO: clear entity state
-                }
-            });
-        default:
-            return state;
+            draft[entityType]['status'] = REQUEST_STATUSES.FAILURE;
+            //TODO: clear entity state for if (replaceMode)
+            return;
     }
-};
+}, {});

@@ -25,8 +25,8 @@ export const isNotEmpty = (value: unknown): boolean => !isEmpty(value);
 
 export const noop = (): undefined => undefined;
 
-export const isFunction = (functionToCheck: unknown): boolean =>
-    functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
+export const isFunction = (functionToCheck: any): boolean =>
+    functionToCheck && Object.prototype.toString.call(functionToCheck) === '[object Function]';
 
 export const get = (object: ObjectType | Model, path: string | string[], value: unknown): unknown => {
     const pathArray = Array.isArray(path) ? path : path.split('.').filter((key) => key);
