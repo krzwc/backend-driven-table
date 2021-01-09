@@ -1,5 +1,5 @@
 # Backend driven table
-To launch run `docker-compose up` and run `yarn start` in `/frontend`.<br>
+To launch db run `docker-compose up` then follow [README](./backend/README.md) to run the BE  and finally run `npm run start` in `/frontend`.<br>
 The app should be running at [http://localhost:3000](http://localhost:3000).
 
 ## Tricky parts solved - for future reference
