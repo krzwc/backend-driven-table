@@ -41,7 +41,7 @@ export class Login extends PureComponent<LoginOwnProps> {
 
         return (
             <>
-                <span>Please Log In</span>
+                <span>Please Sign In (email: ifielders0@npr.org, pass: d***)</span>
                 <Form
                     ref={this.formRef}
                     onFinish={this.onFinish}
